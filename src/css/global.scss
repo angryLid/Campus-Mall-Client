@@ -2,17 +2,20 @@ body {
 	background: #fcfcfc;
 }
 
+li {
+	list-style: none;
+}
+
 .title-light {
 	font-weight: 500;
 }
-ul,li,body{
-    margin:0;
-    padding:0;
-}
-li{
-    list-style: none;
+
+.color-theme {
+	color: #00abec;
 }
 
-.color-theme{
-    color:#00ABEC
+.wrapper-w40 {
+	width: 40%;
+	margin: 0 auto;
+	text-align: center;
 }

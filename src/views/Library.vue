@@ -1,6 +1,17 @@
 <template>
   <div>
-    <v-table :width="1000" :columns="columns" :table-data="tableData" :show-vertical-border="false"></v-table>
+    <el-table :data="tableData" style="width: 100%">
+      <el-table-column prop="name" label="课程名称" width="180"></el-table-column>
+      <el-table-column prop="tel" label="任课老师" width="180"></el-table-column>
+      <el-table-column prop="hobby" label="授课时间"></el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-link type="success" @click="handleEdit(scope.$index, scope.row)">选课</el-link>
+          <!-- <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">Edit</el-button> -->
+          <!-- <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">Delete</el-button> -->
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 <script>

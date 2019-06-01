@@ -1,8 +1,8 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper-w40">
     <el-form action>
       <el-form-item>
-        <h1 class="title">教学服务平台</h1>
+        <h1 class="title-light">教学服务平台</h1>
       </el-form-item>
       <el-form-item class="row">
         <el-input type="text" v-model="stuid" placeholder="学号/电话号码/邮箱"></el-input>
@@ -19,21 +19,13 @@
   </div>
 </template>
 <style lang="scss" scoped>
-.wrapper {
-  width: 40%;
-  margin: 0 auto;
-  text-align: center;
-}
-.title {
-  font-weight: 500;
-}
 </style>
 <script>
 export default {
   data() {
     return {
-      stuid: "",
-      psw: ""
+      stuid: "1802211021",
+      psw: "123"
     };
   }
 };

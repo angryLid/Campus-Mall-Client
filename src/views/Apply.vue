@@ -1,45 +1,50 @@
 <template>
-  <div>
-    <Calendar v-on:choseDay="clickDay" :agoDayHide="getTimestamp()"></Calendar>
-    <input v-model="chosen" type="text" disabled>
-    <select name id>
-      <option>第一课时</option>
-      <option>第二课时</option>
-      <option>第三课时</option>
-      <option>第四课时</option>
-      <option>第五课时</option>
-      <option>第六课时</option>
-      <option>第七课时</option>
-      <option>第八课时</option>
-    </select>
-    <button></button>
-    <textarea name id cols="30" rows="10"></textarea>
-    <input type="text" @input="changed">
+  <div class="wrapper">
+    <el-date-picker v-model="value1" type="date" placeholder="选择日期" :picker-options="pickerOptions"></el-date-picker>
+
+    <el-select v-model="value" placeholder="请选择">
+      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+    </el-select>
   </div>
 </template>
 <style lang="scss" scoped>
 </style>
 <script>
-import Calendar from "vue-calendar-component";
 export default {
-  components: {
-    Calendar
-  },
-  methods: {
-    clickDay(data) {
-      this.chosen = data;
-    },
-    getTimestamp() {
-      let timeStamp = Date.parse(new Date()) / 1000;
-      return timeStamp + "";
-    },
-    changed(event){
-      this.$store.commit('change',event.target.value)
-    }
-  },
+  methods: {},
   data() {
     return {
-      chosen: null
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() < Date.now();
+        }
+      },
+      value1: "",
+      value2: "",
+      chosen: null,
+      options: [
+        {
+          value: "选项1",
+          label: "第一课时"
+        },
+        {
+          value: "选项2",
+          label: "第二课时"
+        },
+        {
+          value: "选项3",
+          label: "第三课时"
+        },
+        {
+          value: "选项4",
+          label: "第四课时"
+        },
+        {
+          value: "选项5",
+          label: "第五课时"
+        }
+      ],
+      value: ""
     };
   }
 };
