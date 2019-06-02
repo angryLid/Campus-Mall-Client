@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper-w80">
     <el-table :data="tableData" style="width: 100%">
       <el-table-column prop="name" label="课程名称" width="180"></el-table-column>
       <el-table-column prop="tel" label="任课老师" width="180"></el-table-column>
