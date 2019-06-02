@@ -1,14 +1,52 @@
 
-《从零搭建 vue2 vue-router2 webpack4 工程》 对应分支 [`vue2-webpack4`](https://github.com/qinshenxue/vue2-vue-router2-webpack2/tree/vue2-webpack4)
 
-[https://www.qinshenxue.com/article/vue2-vue-router2-webpack4.html](https://www.qinshenxue.com/article/vue2-vue-router2-webpack4.html)
+[webpack配置](https://github.com/qinshenxue/vue2-vue-router2-webpack2/tree/master)
+
+```bash
+# 切换淘宝源
+npm config set registry https://registry.npm.taobao.org
+npm set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass
+
+# 初始化
+npm i
+
+# 构建
+npm run dev
+npm run build
+```
 
 
-《从零搭建vue2+vue-router2+webpack3工程》 对应分支 `master`
-
-[http://www.qinshenxue.com/article/20161118151423.html](http://www.qinshenxue.com/article/20161118151423.html)
 
 
-《搭建 vue2 vue-router2 webpack3 多入口工程》 对应分支 [`mpa1`](https://github.com/qinshenxue/vue2-vue-router2-webpack2/tree/mpa1) [`mpa1-history-mode-router`](https://github.com/qinshenxue/vue2-vue-router2-webpack2/tree/mpa1-history-mode-router) [`mpa2`](https://github.com/qinshenxue/vue2-vue-router2-webpack2/tree/mpa2)
 
-[https://www.qinshenxue.com/article/20171102091836.html](https://www.qinshenxue.com/article/20171102091836.html)
+|-- vue-stu
+    |-- .babelrc
+    |-- .editorconfig
+    |-- .gitignore
+    |-- index.tpl.html
+    |-- LICENSE
+    |-- package-lock.json
+    |-- package.json
+    |-- postcss.config.js
+    |-- README.md
+    |-- yarn.lock
+    |-- build **<- webpack 配置**
+    |-- dist **<- 输出目录**
+    |-- src
+        |-- App.vue
+        |-- main.js **<-vue配置**
+        |-- router.js **<-vue-router config**
+        |-- store.js **<- vuex config**
+        |-- css
+        |   |-- global.scss
+        |-- images
+        |   |-- avatar.jpg
+        |-- views
+            |-- Account.vue
+            |-- Apply.vue
+            |-- Cources.vue
+            |-- Feedback.vue
+            |-- Library.vue
+            |-- Login.vue
+            |-- Register.vue
+            |-- Score.vue
