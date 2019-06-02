@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
-
+import { store } from './store';
 import Account from './views/Account.vue';
 import Apply from './views/Apply.vue';
 import Cources from './views/Cources.vue';
@@ -19,6 +19,11 @@ export const router = new VueRouter({
 			component: Login,
 			meta: {
 				title: '登录'
+			},
+			beforeEach: (to, from, next) => {
+				if (store.state.checkedIn) {
+					next('/account');
+				}
 			}
 		},
 		{
@@ -71,4 +76,11 @@ export const router = new VueRouter({
 			}
 		}
 	]
+});
+// dynamic HTML title
+router.beforeEach((to, from, next) => {
+	if (to.meta.title) {
+		document.title = `${to.meta.title} - 教学服务平台`;
+	}
+	next();
 });

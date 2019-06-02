@@ -1,18 +1,20 @@
 <template>
   <div class="panel">
     <div class="nav">
-      <router-link class="link" to="/" exact>登录</router-link>
-      <router-link class="link" to="register">注册</router-link>
-      <router-link class="link" to="cources">选课</router-link>
-      <router-link class="link" to="apply">请假</router-link>
-      <router-link class="link" to="library">借阅管理</router-link>
-      <router-link class="link" to="score">成绩查询</router-link>
-      <router-link class="link" to="feedback">评价调查</router-link>
-      <router-link class="link" to="account">账户管理</router-link>
+      <router-link class="link" to="/" exact v-show="!$store.state.checkedIn">登录</router-link>
+      <router-link class="link" to="register" v-show="!$store.state.checkedIn">注册</router-link>
+      <router-link class="link" to="cources" v-show="$store.state.checkedIn">选课</router-link>
+      <router-link class="link" to="apply" v-show="$store.state.checkedIn">请假</router-link>
+      <router-link class="link" to="library" v-show="$store.state.checkedIn">借阅管理</router-link>
+      <router-link class="link" to="score" v-show="$store.state.checkedIn">成绩查询</router-link>
+      <router-link class="link" to="feedback" v-show="$store.state.checkedIn">评价调查</router-link>
+      <router-link class="link" to="account" v-show="$store.state.checkedIn">账户管理</router-link>
     </div>
 
     <div class="view">
+      <!-- <transition name="fade"> -->
       <router-view class="app-root"></router-view>
+      <!-- </transition> -->
     </div>
   </div>
 </template>

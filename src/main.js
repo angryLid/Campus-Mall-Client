@@ -14,11 +14,3 @@ new Vue({
 	store,
 	render: (h) => h(App)
 });
-
-// dynamic HTML title
-router.beforeEach((to, from, next) => {
-	if (to.meta.title) {
-		document.title = `${to.meta.title} - 教学服务平台`;
-	}
-	next();
-});

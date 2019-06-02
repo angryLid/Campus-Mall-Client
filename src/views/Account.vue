@@ -21,16 +21,16 @@
     <div class="content">
       <form action>
         <div class="row">
-          <input type="text" id="name" placeholder="当前密码">
+          <el-input type="text" id="name" placeholder="当前密码"></el-input>
         </div>
 
         <div class="row">
-          <input type="password" id="psw" placeholder="新密码">
+          <el-input type="password" id="psw" placeholder="新密码"></el-input>
         </div>
         <div class="row">
-          <input type="password" id="psw2" placeholder="确认新密码">
+          <el-input type="password" id="psw2" placeholder="确认新密码"></el-input>
         </div>
-        <button>修改</button>
+        <el-button>修改</el-button>
       </form>
     </div>
   </div>
@@ -79,16 +79,16 @@
   padding: 5px 0 20px 0;
   height: 32px;
 
-  input {
+  /* input {
     box-sizing: border-box;
     width: 60%;
     height: 40px;
     border-radius: 5px;
     padding-left: 10px;
     border: 1px solid #cccccc;
-  }
+  } */
 }
-button {
+/* button {
   width: 60%;
   height: 38px;
   font-size: 20px;
@@ -98,5 +98,5 @@ button {
   background-color: #307ceb;
   border: 0;
   color: white;
-}
+} */
 </style>

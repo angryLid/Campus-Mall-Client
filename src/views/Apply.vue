@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-w80">
-    <el-form>
+    <el-form ref="form" :model="form">
       <el-form-item>
         <el-date-picker
           v-model="value1"
@@ -8,6 +8,7 @@
           placeholder="选择日期"
           :picker-options="pickerOptions"
         ></el-date-picker>
+
         <el-select v-model="value" placeholder="请选择">
           <el-option
             v-for="item in options"
@@ -26,11 +27,18 @@
           v-model="textarea2"
         ></el-input>
       </el-form-item>
-      <el-from-item>
-        <el-button>申请</el-button>
-      </el-from-item>
+
+      <!-- <el-from-item> -->
+      <el-button>申请</el-button>
+      <!-- </el-from-item> -->
     </el-form>
     <h2 class="title-light">审核状态:</h2>
+
+    <el-table :data="tableData" style="width:100%">
+      <el-table-column prop="date" label="日期"></el-table-column>
+      <el-table-column prop="lesson" label="课时"></el-table-column>
+      <el-table-column prop="store" label="状态"></el-table-column>
+    </el-table>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -40,11 +48,20 @@ export default {
   methods: {},
   data() {
     return {
+      form: {},
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() < Date.now();
         }
       },
+      tableData: [
+        {
+          date: "234",
+          lesson: "6",
+          store: "passed"
+        }
+      ],
+
       value1: "",
       value2: "",
       textarea2: "",
