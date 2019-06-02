@@ -18,7 +18,7 @@ npm run build
 
 
 
-
+```
 |-- vue-stu
     |-- .babelrc
     |-- .editorconfig
@@ -50,3 +50,4 @@ npm run build
             |-- Login.vue
             |-- Register.vue
             |-- Score.vue
+```
