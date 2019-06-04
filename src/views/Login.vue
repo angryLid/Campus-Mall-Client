@@ -20,7 +20,7 @@
         <el-checkbox>记住密码</el-checkbox>
         <el-button type="primary" @click="submit">登录</el-button>
       </el-form-item>
-      <p>look at here {{ $store.state.checkedIn }}</p>
+      <!-- <p>look at here {{ $store.state.checkedIn }}</p> -->
     </el-form>
   </div>
 </template>
@@ -48,11 +48,11 @@ export default {
         this.coincided = true;
         this.$store.commit("success");
         // test();
-        this.$router.push({ path: "/account" });
-        console.log("checkedIn");
+        this.$router.push({ path: "/board" });
+        // console.log("checkedIn");
       } else {
         this.wrong = true;
-        console.log("failed");
+        // console.log("failed");
       }
     },
     check(event) {

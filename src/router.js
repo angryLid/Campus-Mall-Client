@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
-import { store } from './store';
+
 import Account from './views/Account.vue';
 import Apply from './views/Apply.vue';
+import Board from './views/Board.vue';
 import Cources from './views/Cources.vue';
 import Feekback from './views/Feedback.vue';
 import Library from './views/Library.vue';
@@ -19,13 +20,16 @@ export const router = new VueRouter({
 			component: Login,
 			meta: {
 				title: '登录'
-			},
-			beforeEach: (to, from, next) => {
-				if (store.state.checkedIn) {
-					next('/account');
-				}
 			}
 		},
+		{
+			path: '/board',
+			component: Board,
+			meta: {
+				title: '公告栏'
+			}
+		},
+
 		{
 			path: '/register',
 			component: Register,

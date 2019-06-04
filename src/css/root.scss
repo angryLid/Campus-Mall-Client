@@ -1,0 +1,68 @@
+@media (max-width: 768px) {
+	.app-root {
+		width: 100%;
+	}
+}
+.panel {
+	display: flex;
+	justify-content: space-between;
+	// vertical & horizontal center
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+
+	height: 86vh;
+	width: 80vw;
+}
+@media (max-width: 768px) {
+	.panel {
+		flex-direction: column;
+		width: 92vw;
+	}
+}
+.nav {
+	width: 18%;
+
+	border-radius: 8px;
+}
+@media (max-width: 768px) {
+	.nav {
+		width: 100%;
+	}
+}
+.view {
+	width: 80%;
+}
+@media (max-width: 768px) {
+	.view {
+		width: 100%;
+	}
+}
+.link {
+	display: block;
+
+	margin: 5px;
+	padding: 8px 26px 8px 0;
+	border-radius: 6px;
+	color: #3490de;
+	text-decoration: none;
+	text-align: right;
+	font-size: 20px;
+
+	:hover {
+		color: #2283d4;
+	}
+	&.active {
+		color: white;
+		background: #3490de;
+	}
+}
+@media (max-width: 768px) {
+	.link {
+		text-align: left;
+		padding-left: 30px;
+	}
+}

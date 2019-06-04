@@ -32,13 +32,13 @@
       <el-button>申请</el-button>
       <!-- </el-from-item> -->
     </el-form>
-    <h2 class="title-light">审核状态:</h2>
+    <!-- <h2 class="title-light">审核状态:</h2>
 
     <el-table :data="tableData" style="width:100%">
       <el-table-column prop="date" label="日期"></el-table-column>
       <el-table-column prop="lesson" label="课时"></el-table-column>
       <el-table-column prop="store" label="状态"></el-table-column>
-    </el-table>
+    </el-table>-->
   </div>
 </template>
 <style lang="scss" scoped>
