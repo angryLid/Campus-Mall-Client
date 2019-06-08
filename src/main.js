@@ -3,6 +3,8 @@ import App from './App.vue';
 import { store } from './store';
 import { router } from './router';
 
+import axios from 'axios';
+Vue.prototype.$ajax = axios;
 // import element-ui
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';

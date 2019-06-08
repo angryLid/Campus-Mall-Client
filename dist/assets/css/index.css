@@ -19,11 +19,13 @@ body{background:#fcfcfc}li{list-style:none}.title-light{font-weight:500}.color-t
 }
 .row[data-v-c691fe86]{padding:5px 0 20px;height:32px
 }
-.el-carousel__item h3[data-v-2b56bdfa]{color:#fff;font-size:24px;opacity:.75;line-height:150px;margin:0;text-align:center
+.el-carousel__item h3[data-v-4a2ab44e]{color:#fff;font-size:24px;opacity:.75;line-height:150px;margin:0;text-align:center
 }
-.el-carousel__item[data-v-2b56bdfa]:nth-child(2n){background-color:#99a9bf
+.el-carousel__item[data-v-4a2ab44e]:nth-child(2n){background-color:#99a9bf
 }
-.el-carousel__item[data-v-2b56bdfa]:nth-child(odd){background-color:#9bb9c2
+.el-carousel__item[data-v-4a2ab44e]:nth-child(odd){background-color:#9bb9c2
+}
+.news-item[data-v-4a2ab44e]{padding:5px 0
 }
 .card{margin-bottom:20px
 }
