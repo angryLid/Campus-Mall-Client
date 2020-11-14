@@ -70,7 +70,7 @@
 export default {
     data() {
         return {
-            stuID: "10001",
+            stuID: 10001,
             psw: "8080",
             coincided: false,
             wrong: false
@@ -78,18 +78,35 @@ export default {
     },
     methods: {
         submit(event) {
-            console.log(event);
-            if (this.stuID == "10001" && this.psw == "8080") {
-                this.wrong = false;
-                this.coincided = true;
-                this.$store.commit("success");
-                // test();
-                this.$router.push({ path: "/board" });
-                // console.log("checkedIn");
-            } else {
-                this.wrong = true;
-                // console.log("failed");
-            }
+            let that = this;
+            this.$ajax
+                .post("/login", {
+                    jobNumber: this.stuID,
+                    password: this.psw
+                })
+                .then(function(response) {
+                    if (response.data.code == 200) {
+                        localStorage.setItem(
+                            "Authorization",
+                            response.data.data
+                        );
+                        that.wrong = false;
+                        that.coincided = true;
+                        setTimeout(() => {
+                            that.$router.push({ path: "/board/account" });
+                        }, 500);
+
+                        return;
+                    } else {
+                        that.wrong = true;
+                        that.coincided = false;
+                    }
+
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
         },
         check(event) {
             console.log(event);

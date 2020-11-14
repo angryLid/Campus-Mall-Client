@@ -1,85 +1,133 @@
 <template>
-  <div class="wrapper">
-    <div class="avatar">
-      <div>
-        <img src="../images/avatar.jpg" alt>
-      </div>
+    <div class="wrapper">
+        <div class="avatar">
+            <div>
+                <img src="../images/avatar.jpg" alt />
+            </div>
 
-      <div class="info">
-        <div>
-          <span class="tag ft">姓名</span> 罗伯特
+            <div class="info">
+                <div><span class="tag ft">工号</span>{{ this.person.uid }}</div>
+                <div>
+                    <span class="tag sd">姓名</span>{{ this.person.uname }}
+                </div>
+                <div>
+                    <span class="tag sd">性别</span>{{ this.person.usex }}
+                </div>
+                <div>
+                    <span class="tag td">部门</span>{{ this.person.department }}
+                </div>
+                <div>
+                    <span class="tag td">职位</span> {{ this.person.position }}
+                </div>
+                <div>
+                    <span class="tag td">入职时间</span>
+                    {{ this.person.dateEntry }}
+                </div>
+                <div>
+                    <span class="tag td">管理员权限</span>
+                    {{ this.person.isAdmin }}
+                </div>
+            </div>
         </div>
-        <div>
-          <span class="tag sd">学院</span> 数学与计算机学院
-        </div>
-        <div>
-          <span class="tag td">班级</span> 18计算机科学与技术一班
-        </div>
-      </div>
+
+        <el-button type="danger" @click="handleLogout">退出登录</el-button>
     </div>
-
-    <div class="content">
-      <form action>
-        <div class="row">
-          <el-input type="text" id="name" placeholder="当前密码"></el-input>
-        </div>
-
-        <div class="row">
-          <el-input type="password" id="psw" placeholder="新密码"></el-input>
-        </div>
-        <div class="row">
-          <el-input type="password" id="psw2" placeholder="确认新密码"></el-input>
-        </div>
-        <el-button>修改</el-button>
-      </form>
-    </div>
-  </div>
 </template>
-
+<script>
+export default {
+    data() {
+        return {
+            person: {
+                uid: 0,
+                uname: "null",
+                usex: "男",
+                dateEntry: "null",
+                department: "Null",
+                position: "null",
+                isAdmin: 0
+            }
+        };
+    },
+    methods: {
+        handleLogout() {
+            localStorage.removeItem("Authorization");
+            this.$router.push({
+                path: "/"
+            });
+        }
+    },
+    created: function() {
+        let that = this;
+        let token = localStorage.getItem("Authorization");
+        let axiosConfig = {
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                Authorization: token
+            }
+        };
+        this.$ajax
+            .get("/profile", axiosConfig)
+            .then(res => {
+                if (res.data.code == 200) {
+                    that.person = res.data.data;
+                    that.person.usex = that.person.usex == "M" ? "男" : "女";
+                    that.person.isAdmin =
+                        that.person.isAdmin == 1 ? "管理员" : "普通职工";
+                } else {
+                    this.handleLogout();
+                }
+            })
+            .catch(err => {});
+    }
+};
+</script>
 <style lang="scss" scoped>
 .wrapper {
-  width: 65%;
-  margin: 0 auto;
+    width: 65%;
+    margin: 0 auto;
 }
 .avatar {
-  display: flex;
-  img {
-    width: 100px;
-    border: 2px rgba(0, 0, 0, 0.15) solid;
-  }
+    display: flex;
+    img {
+        width: 100px;
+        border: 2px rgba(0, 0, 0, 0.15) solid;
+    }
 }
 .info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  padding-left: 30px;
-  //   margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 30px;
+    div {
+        padding: 5px 0;
+    }
+    //   margin-right: 20px;
 }
 .tag {
-  display: inline-block;
-  padding: 4px;
-
-  font-weight: 300;
-  color: white;
-  border-radius: 3px;
+    display: inline-block;
+    padding: 4px;
+    margin-right: 20px;
+    font-weight: 300;
+    color: white;
+    border-radius: 3px;
 }
 .ft {
-  background: #f44336;
+    background: #f44336;
 }
 .sd {
-  background: #009688;
+    background: #009688;
 }
 .td {
-  background: #2196f3;
+    background: #2196f3;
 }
 .content {
-  padding-top: 30px;
+    padding-top: 30px;
 }
 .row {
-  padding: 5px 0 20px 0;
-  height: 32px;
+    padding: 5px 0 20px 0;
+    height: 32px;
 
-  /* input {
+    /* input {
     box-sizing: border-box;
     width: 60%;
     height: 40px;

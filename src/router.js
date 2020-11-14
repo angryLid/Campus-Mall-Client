@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
+import { store } from "./store.js";
 import Account from "./views/Account.vue";
 import Apply from "./views/Apply.vue";
 import Board from "./views/Board.vue";
@@ -17,6 +18,7 @@ export const router = new VueRouter({
     routes: [
         {
             path: "/",
+            name: "login",
             component: Login,
             meta: {
                 title: "登录"
@@ -26,8 +28,24 @@ export const router = new VueRouter({
             path: "/board",
             component: Board,
             meta: {
-                title: "公告栏"
-            }
+                title: "控制台"
+            },
+            children: [
+                {
+                    path: "account",
+                    component: Account,
+                    meta: {
+                        title: "查看职位-控制台"
+                    }
+                },
+                {
+                    path: "apply",
+                    component: Apply,
+                    meta: {
+                        title: "请假申请-控制台"
+                    }
+                }
+            ]
         },
 
         {
@@ -44,20 +62,7 @@ export const router = new VueRouter({
                 title: "选课"
             }
         },
-        {
-            path: "/apply",
-            component: Apply,
-            meta: {
-                title: "请假申请"
-            }
-        },
-        {
-            path: "/account",
-            component: Account,
-            meta: {
-                title: "账户设置"
-            }
-        },
+
         {
             path: "/feedback",
             component: Feekback,
@@ -86,5 +91,20 @@ router.beforeEach((to, from, next) => {
     if (to.meta.title) {
         document.title = `${to.meta.title} - 职工管理系统`;
     }
-    next();
+    let user = localStorage.getItem("Authorization");
+    if (to.path == "/") {
+        if (user) {
+            router.replace("/board/account");
+        } else {
+            next();
+        }
+    } else {
+        if (!user) {
+            next({
+                path: "/"
+            });
+        } else {
+            next();
+        }
+    }
 });

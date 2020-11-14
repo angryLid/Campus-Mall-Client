@@ -1,53 +1,44 @@
 <template>
-    <el-row class="tac">
-        <el-col :span="6" class="full">
-            <el-menu
-                default-active="1"
-                class="el-menu-vertical-demo"
-                @open="handleOpen"
-                @close="handleClose"
-            >
-                <el-submenu index="1">
-                    <template slot="title">
-                        <i class="el-icon-document"></i>
-                        <span>职工信息</span>
-                    </template>
-                    <el-menu-item-group>
-                        <el-menu-item index="1-1">查看职位</el-menu-item>
-                        <el-menu-item index="1-2">请假申请</el-menu-item>
-                    </el-menu-item-group>
-                </el-submenu>
-
-                <el-submenu index="2">
-                    <template slot="title">
-                        <i class="el-icon-setting"></i>
-                        <span>管理功能</span>
-                    </template>
-                    <el-menu-item-group>
-                        <el-menu-item index="2-1">管理员工</el-menu-item>
-                        <el-menu-item index="2-2">批准申请</el-menu-item>
-                    </el-menu-item-group>
-                </el-submenu>
-            </el-menu>
-        </el-col>
-    </el-row>
+    <div>
+        <el-menu
+            :default-active="activeIndex"
+            class="el-menu-demo"
+            mode="horizontal"
+            router
+            @select="handleSelect"
+        >
+            <el-menu-item index="account">职工信息</el-menu-item>
+            <el-menu-item index="apply">提交申请</el-menu-item>
+            <el-submenu index="3">
+                <template slot="title"
+                    >管理</template
+                >
+                <el-menu-item index="3-1">管理员工</el-menu-item>
+                <el-menu-item index="3-2">申请审批</el-menu-item>
+            </el-submenu>
+        </el-menu>
+        <router-view> </router-view>
+    </div>
 </template>
+
 <style lang="scss" scoped>
-.full {
-    height: 100vh;
+.el-menu-demo {
+    margin-bottom: 75px;
 }
 </style>
+
 <script>
 export default {
     data() {
-        return {};
+        return {
+            activeIndex: "1"
+        };
     },
     methods: {
-        getNews() {
-            this.$ajax
-                .get("static/data.json")
-                .then(response => (this.info = response.data));
-        }
+        toAccount() {
+            this.$router.push("/account");
+        },
+        handleSelect() {}
     }
 };
 </script>
