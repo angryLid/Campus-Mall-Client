@@ -2,16 +2,12 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
-import { store } from "./store.js";
 import Account from "./views/Account.vue";
 import Apply from "./views/Apply.vue";
 import Board from "./views/Board.vue";
 import Magane from "./views/Manage.vue";
-import Feekback from "./views/Feedback.vue";
-import Library from "./views/Library.vue";
 import Login from "./views/Login.vue";
 import Examine from "./views/Examine.vue";
-import Score from "./views/Score.vue";
 
 export const router = new VueRouter({
     linkActiveClass: "active",
@@ -61,28 +57,6 @@ export const router = new VueRouter({
                     }
                 }
             ]
-        },
-
-        {
-            path: "/feedback",
-            component: Feekback,
-            meta: {
-                title: "评价调查"
-            }
-        },
-        {
-            path: "/library",
-            component: Library,
-            meta: {
-                title: "借阅管理"
-            }
-        },
-        {
-            path: "/score",
-            component: Score,
-            meta: {
-                title: "成绩查询"
-            }
         }
     ]
 });
