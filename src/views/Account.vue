@@ -73,6 +73,9 @@ export default {
                     that.person.usex = that.person.usex == "M" ? "男" : "女";
                     that.person.isAdmin =
                         that.person.isAdmin == 1 ? "管理员" : "普通职工";
+                    if (that.person.isAdmin == 1) {
+                        this.$store.state.commit("permit");
+                    }
                 } else {
                     this.handleLogout();
                 }

@@ -1,23 +1,23 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from "vue";
+import Vuex from "vuex";
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
-	state: {
-		love: '',
-		checkedIn: false
-	},
+    state: {
+        permission: false,
+        checkedIn: false
+    },
 
-	mutations: {
-		change(state, value) {
-			state.value = value;
-		},
-		success(state) {
-			state.checkedIn = true;
-		}
-	},
-	getters: {
-		love: (state) => state.love,
-		checkedIn: (state) => state.checkedIn
-	}
+    mutations: {
+        permit(state) {
+            state.permission = true;
+        },
+        success(state) {
+            state.checkedIn = true;
+        }
+    },
+    getters: {
+        permission: state => state.permission,
+        checkedIn: state => state.checkedIn
+    }
 });

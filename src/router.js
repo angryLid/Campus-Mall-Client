@@ -6,15 +6,16 @@ import { store } from "./store.js";
 import Account from "./views/Account.vue";
 import Apply from "./views/Apply.vue";
 import Board from "./views/Board.vue";
-import Cources from "./views/Cources.vue";
+import Magane from "./views/Manage.vue";
 import Feekback from "./views/Feedback.vue";
 import Library from "./views/Library.vue";
 import Login from "./views/Login.vue";
-import Register from "./views/Register.vue";
+import Examine from "./views/Examine.vue";
 import Score from "./views/Score.vue";
 
 export const router = new VueRouter({
     linkActiveClass: "active",
+    // mode: "history",
     routes: [
         {
             path: "/",
@@ -44,23 +45,22 @@ export const router = new VueRouter({
                     meta: {
                         title: "请假申请-控制台"
                     }
+                },
+                {
+                    path: "manage",
+                    component: Magane,
+                    meta: {
+                        title: "员工管理"
+                    }
+                },
+                {
+                    path: "examine",
+                    component: Examine,
+                    meta: {
+                        title: "审批"
+                    }
                 }
             ]
-        },
-
-        {
-            path: "/register",
-            component: Register,
-            meta: {
-                title: "注册"
-            }
-        },
-        {
-            path: "/cources",
-            component: Cources,
-            meta: {
-                title: "选课"
-            }
         },
 
         {

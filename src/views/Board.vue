@@ -1,7 +1,6 @@
 <template>
     <div>
         <el-menu
-            :default-active="activeIndex"
             class="el-menu-demo"
             mode="horizontal"
             router
@@ -13,8 +12,8 @@
                 <template slot="title"
                     >管理</template
                 >
-                <el-menu-item index="3-1">管理员工</el-menu-item>
-                <el-menu-item index="3-2">申请审批</el-menu-item>
+                <el-menu-item index="manage">管理员工</el-menu-item>
+                <el-menu-item index="examine">申请审批</el-menu-item>
             </el-submenu>
         </el-menu>
         <router-view> </router-view>
@@ -31,7 +30,7 @@
 export default {
     data() {
         return {
-            activeIndex: "1"
+            permission: false
         };
     },
     methods: {
@@ -39,6 +38,10 @@ export default {
             this.$router.push("/account");
         },
         handleSelect() {}
+    },
+    mounted: function() {
+        // console.log(this.$store);
+        this.permission = this.$store.state.permission;
     }
 };
 </script>
