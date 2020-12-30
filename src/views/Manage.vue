@@ -49,66 +49,65 @@
 
 <script>
 export default {
-    data() {
-        return {
-            search: "",
-            tableData: [],
-            chosenCources: []
-        };
-    },
-    methods: {
-        disabled(index, row) {
-            return row.selected;
-        },
-        handleEdit(index, row) {
-            console.log(index, row);
-        },
-
-        handleDelete(index, row) {
-            console.log(index, row);
-        },
-
-        select(index, row) {
-            console.log(row);
-            // row.selected = true;
-            let crs = this.tableData[index];
-
-            if (crs.selected) {
-                return;
-            } else {
-                crs.selected = true;
-                this.chosenCources.push(crs);
-            }
-        },
-
-        cancel(index, row) {
-            this.tableData[row.id].selected = false;
-            console.log(row.id);
-            this.chosenCources.splice(index, 1);
-        }
-    },
-    created: function() {
-        let that = this;
-        let token = localStorage.getItem("Authorization");
-        let axiosConfig = {
-            headers: {
-                "Content-Type": "application/json;charset=UTF-8",
-                Authorization: token
-            }
-        };
-        this.$ajax
-            .get("/profile/all", axiosConfig)
-            .then(res => {
-                if (res.data.code == 200) {
-                    that.tableData = res.data.data;
-                    that.tableData.map(item => {
-                        item.usex = item.usex == "M" ? "男" : "女";
-                    });
-                } else {
-                    // this.handleLogout();
-                }
-            })
-            .catch(err => {});
+  data () {
+    return {
+      search: '',
+      tableData: [],
+      chosenCources: []
     }
-};
+  },
+  methods: {
+    disabled (index, row) {
+      return row.selected
+    },
+    handleEdit (index, row) {
+      console.log(index, row)
+    },
+
+    handleDelete (index, row) {
+      console.log(index, row)
+    },
+
+    select (index, row) {
+      console.log(row)
+      // row.selected = true;
+      const crs = this.tableData[index]
+
+      if (crs.selected) {
+      } else {
+        crs.selected = true
+        this.chosenCources.push(crs)
+      }
+    },
+
+    cancel (index, row) {
+      this.tableData[row.id].selected = false
+      console.log(row.id)
+      this.chosenCources.splice(index, 1)
+    }
+  },
+  created: function () {
+    const that = this
+    const token = localStorage.getItem('Authorization')
+    const axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        Authorization: token
+      }
+    }
+    this.$ajax
+      .get('/profile/all', axiosConfig)
+      .then((res) => {
+        if (res.data.code === 200) {
+          that.tableData = res.data.data
+          that.tableData.map((item) => {
+            item.usex = item.usex === 'M' ? '男' : '女'
+          })
+        } else {
+          // this.handleLogout();
+        }
+      })
+      .catch(() => {})
+  }
+}
 </script>

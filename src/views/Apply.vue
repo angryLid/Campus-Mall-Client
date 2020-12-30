@@ -33,111 +33,111 @@
 <style lang="scss" scoped></style>
 <script>
 export default {
-    methods: {
-        handleApply() {
-            let that = this;
-            let token = localStorage.getItem("Authorization");
-            let axiosConfig = {
-                headers: {
-                    "Content-Type": "application/json;charset=UTF-8",
-                    Authorization: token
-                }
-            };
-            this.$ajax
-                .post(
-                    "/message",
-                    {
-                        applicant: 0,
-                        message: "" + that.value1 + that.textarea2
-                    },
-                    axiosConfig
-                )
-                .then(res => {
-                    if (res.data.code == 200) {
-                        that.fetchAll();
-                        console.log(res);
-                    } else {
-                        // alert("出错了");
-                        console.log(res);
-                    }
-                })
-                .catch(err => {});
-        },
-        fetchAll() {
-            let that = this;
-            let token = localStorage.getItem("Authorization");
-            let axiosConfig = {
-                headers: {
-                    "Content-Type": "application/json;charset=UTF-8",
-                    Authorization: token
-                }
-            };
-            this.$ajax
-                .get("/message/cur", axiosConfig)
-                .then(res => {
-                    if (res.data.code == 200) {
-                        that.tableData = res.data.data;
-                        that.tableData.map(item => {
-                            if (item.approved == 0) {
-                                item.approved = "待审批";
-                            } else if (item.approved == 1) {
-                                item.approved = "通过";
-                            } else {
-                                item.approved = "驳回";
-                            }
-                        });
-                    } else {
-                        // this.handleLogout();
-                    }
-                })
-                .catch(err => {});
+  methods: {
+    handleApply () {
+      const that = this
+      const token = localStorage.getItem('Authorization')
+      const axiosConfig = {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          Authorization: token
         }
+      }
+      this.$ajax
+        .post(
+          '/message',
+          {
+            applicant: 0,
+            message: '' + that.value1 + that.textarea2
+          },
+          axiosConfig
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            that.fetchAll()
+            console.log(res)
+          } else {
+            // alert("出错了");
+            console.log(res)
+          }
+        })
+        .catch(() => {})
     },
-    data() {
-        return {
-            form: {},
-            pickerOptions: {
-                disabledDate(time) {
-                    return time.getTime() < Date.now();
-                }
-            },
-            tableData: [],
-
-            value1: "",
-            value2: "",
-            textarea2: "开发测试数据placeholder",
-            chosen: null,
-            value: ""
-        };
-    },
-    created: function() {
-        let that = this;
-        let token = localStorage.getItem("Authorization");
-        let axiosConfig = {
-            headers: {
-                "Content-Type": "application/json;charset=UTF-8",
-                Authorization: token
-            }
-        };
-        this.$ajax
-            .get("/message/cur", axiosConfig)
-            .then(res => {
-                if (res.data.code == 200) {
-                    that.tableData = res.data.data;
-                    that.tableData.map(item => {
-                        if (item.approved == 0) {
-                            item.approved = "待审批";
-                        } else if (item.approved == 1) {
-                            item.approved = "通过";
-                        } else {
-                            item.approved = "驳回";
-                        }
-                    });
-                } else {
-                    // this.handleLogout();
-                }
+    fetchAll () {
+      const that = this
+      const token = localStorage.getItem('Authorization')
+      const axiosConfig = {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          Authorization: token
+        }
+      }
+      this.$ajax
+        .get('/message/cur', axiosConfig)
+        .then((res) => {
+          if (res.data.code === 200) {
+            that.tableData = res.data.data
+            that.tableData.map((item) => {
+              if (item.approved === 0) {
+                item.approved = '待审批'
+              } else if (item.approved === 1) {
+                item.approved = '通过'
+              } else {
+                item.approved = '驳回'
+              }
             })
-            .catch(err => {});
+          } else {
+            // this.handleLogout();
+          }
+        })
+        .catch(() => {})
     }
-};
+  },
+  data () {
+    return {
+      form: {},
+      pickerOptions: {
+        disabledDate (time) {
+          return time.getTime() < Date.now()
+        }
+      },
+      tableData: [],
+
+      value1: '',
+      value2: '',
+      textarea2: '开发测试数据placeholder',
+      chosen: null,
+      value: ''
+    }
+  },
+  created: function () {
+    const that = this
+    const token = localStorage.getItem('Authorization')
+    const axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        Authorization: token
+      }
+    }
+    this.$ajax
+      .get('/message/cur', axiosConfig)
+      .then((res) => {
+        if (res.data.code === 200) {
+          that.tableData = res.data.data
+          that.tableData.map((item) => {
+            if (item.approved === 0) {
+              item.approved = '待审批'
+            } else if (item.approved === 1) {
+              item.approved = '通过'
+            } else {
+              item.approved = '驳回'
+            }
+          })
+        } else {
+          // this.handleLogout();
+        }
+      })
+      .catch(() => {})
+  }
+}
 </script>

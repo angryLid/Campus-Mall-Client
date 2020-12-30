@@ -5,13 +5,13 @@
 </template>
 
 <script>
-import "./css/global.scss";
+import './css/global.scss'
 export default {
-    data() {
-        return {};
-    },
-    methods: {}
-};
+  data () {
+    return {}
+  },
+  methods: {}
+}
 </script>
 
 <style lang="scss" scoped></style>

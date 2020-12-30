@@ -68,49 +68,49 @@
 <script>
 // import { test } from "../utils";
 export default {
-    data() {
-        return {
-            stuID: 10001,
-            psw: "8080",
-            coincided: false,
-            wrong: false
-        };
-    },
-    methods: {
-        submit(event) {
-            let that = this;
-            this.$ajax
-                .post("/login", {
-                    jobNumber: this.stuID,
-                    password: this.psw
-                })
-                .then(function(response) {
-                    if (response.data.code == 200) {
-                        localStorage.setItem(
-                            "Authorization",
-                            response.data.data
-                        );
-                        that.wrong = false;
-                        that.coincided = true;
-                        setTimeout(() => {
-                            that.$router.push({ path: "/board/account" });
-                        }, 500);
-
-                        return;
-                    } else {
-                        that.wrong = true;
-                        that.coincided = false;
-                    }
-
-                    console.log(response);
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
-        },
-        check(event) {
-            console.log(event);
-        }
+  data () {
+    return {
+      stuID: 10001,
+      psw: '8080',
+      coincided: false,
+      wrong: false
     }
-};
+  },
+  methods: {
+    submit (event) {
+      const that = this
+      this.$ajax
+        .post('/login', {
+          jobNumber: this.stuID,
+          password: this.psw
+        })
+        .then(function (response) {
+          if (response.data.code === 200) {
+            localStorage.setItem(
+              'Authorization',
+              response.data.data
+            )
+            that.wrong = false
+            that.coincided = true
+            setTimeout(() => {
+              that.$router.push({ path: '/board/account' })
+            }, 500)
+
+            return
+          } else {
+            that.wrong = true
+            that.coincided = false
+          }
+
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    check (event) {
+      console.log(event)
+    }
+  }
+}
 </script>

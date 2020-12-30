@@ -41,99 +41,97 @@
 
 <script>
 export default {
-    data() {
-        return {
-            tableData: []
-        };
-    },
-    methods: {
-        disabled(index, row) {
-            return row.selected;
-        },
-
-        pass(index, row) {
-            let that = this;
-            let token = localStorage.getItem("Authorization");
-            let axiosConfig = {
-                headers: {
-                    "Content-Type": "application/json;charset=UTF-8",
-                    Authorization: token
-                }
-            };
-            this.$ajax
-                .put(`/message?id=${row.sno}&status=true`, null, axiosConfig)
-                .then(res => {
-                    console.log(res);
-                    if (res.data.code == 200) {
-                        this.refresh();
-                    } else {
-                        // this.handleLogout();
-                    }
-                })
-                .catch(err => {});
-        },
-        reject(index, row) {
-            let that = this;
-            let token = localStorage.getItem("Authorization");
-            let axiosConfig = {
-                headers: {
-                    "Content-Type": "application/json;charset=UTF-8",
-                    Authorization: token
-                }
-            };
-            this.$ajax
-                .put(`/message?id=${row.sno}&status=false`, null, axiosConfig)
-                .then(res => {
-                    console.log(res);
-                    if (res.data.code == 200) {
-                        this.refresh();
-                    } else {
-                        // this.handleLogout();
-                    }
-                })
-                .catch(err => {});
-        },
-
-        refresh() {
-            let that = this;
-            let token = localStorage.getItem("Authorization");
-            let axiosConfig = {
-                headers: {
-                    "Content-Type": "application/json;charset=UTF-8",
-                    Authorization: token
-                }
-            };
-            this.$ajax
-                .get("/message", axiosConfig)
-                .then(res => {
-                    if (res.data.code == 200) {
-                        that.tableData = res.data.data;
-                    } else {
-                        // this.handleLogout();
-                    }
-                })
-                .catch(err => {});
-        }
-    },
-    created: function() {
-        let that = this;
-        let token = localStorage.getItem("Authorization");
-        let axiosConfig = {
-            headers: {
-                "Content-Type": "application/json;charset=UTF-8",
-                Authorization: token
-            }
-        };
-        this.$ajax
-            .get("/message", axiosConfig)
-            .then(res => {
-                if (res.data.code == 200) {
-                    that.tableData = res.data.data;
-                } else {
-                    // this.handleLogout();
-                }
-            })
-            .catch(err => {});
+  data () {
+    return {
+      tableData: []
     }
-};
+  },
+  methods: {
+    disabled (index, row) {
+      return row.selected
+    },
+
+    pass (index, row) {
+      const token = localStorage.getItem('Authorization')
+      const axiosConfig = {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          Authorization: token
+        }
+      }
+      this.$ajax
+        .put(`/message?id=${row.sno}&status=true`, null, axiosConfig)
+        .then((res) => {
+          console.log(res)
+          if (res.data.code === 200) {
+            this.refresh()
+          } else {
+            // this.handleLogout();
+          }
+        })
+        .catch(() => {})
+    },
+    reject (index, row) {
+      const token = localStorage.getItem('Authorization')
+      const axiosConfig = {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          Authorization: token
+        }
+      }
+      this.$ajax
+        .put(`/message?id=${row.sno}&status=false`, null, axiosConfig)
+        .then((res) => {
+          console.log(res)
+          if (res.data.code === 200) {
+            this.refresh()
+          } else {
+            // this.handleLogout();
+          }
+        })
+        .catch(() => {})
+    },
+
+    refresh () {
+      const that = this
+      const token = localStorage.getItem('Authorization')
+      const axiosConfig = {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          Authorization: token
+        }
+      }
+      this.$ajax
+        .get('/message', axiosConfig)
+        .then((res) => {
+          if (res.data.code === 200) {
+            that.tableData = res.data.data
+          } else {
+            // this.handleLogout();
+          }
+        })
+        .catch(() => {})
+    }
+  },
+  created: function () {
+    const that = this
+    const token = localStorage.getItem('Authorization')
+    const axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        Authorization: token
+      }
+    }
+    this.$ajax
+      .get('/message', axiosConfig)
+      .then((res) => {
+        if (res.data.code === 200) {
+          that.tableData = res.data.data
+        } else {
+          // this.handleLogout();
+        }
+      })
+      .catch(() => {})
+  }
+}
 </script>

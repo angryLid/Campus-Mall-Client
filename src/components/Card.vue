@@ -13,6 +13,6 @@
 
 <script>
 export default {
-  props: ["title", "author", "published", "course"]
-};
+  props: ['title', 'author', 'published', 'course']
+}
 </script>

@@ -35,54 +35,54 @@
 </template>
 <script>
 export default {
-    data() {
-        return {
-            person: {
-                uid: 0,
-                uname: "null",
-                usex: "男",
-                dateEntry: "null",
-                department: "Null",
-                position: "null",
-                isAdmin: 0
-            }
-        };
-    },
-    methods: {
-        handleLogout() {
-            localStorage.removeItem("Authorization");
-            this.$router.push({
-                path: "/"
-            });
-        }
-    },
-    created: function() {
-        let that = this;
-        let token = localStorage.getItem("Authorization");
-        let axiosConfig = {
-            headers: {
-                "Content-Type": "application/json;charset=UTF-8",
-                Authorization: token
-            }
-        };
-        this.$ajax
-            .get("/profile", axiosConfig)
-            .then(res => {
-                if (res.data.code == 200) {
-                    that.person = res.data.data;
-                    that.person.usex = that.person.usex == "M" ? "男" : "女";
-                    that.person.isAdmin =
-                        that.person.isAdmin == 1 ? "管理员" : "普通职工";
-                    if (that.person.isAdmin == 1) {
-                        this.$store.state.commit("permit");
-                    }
-                } else {
-                    this.handleLogout();
-                }
-            })
-            .catch(err => {});
+  data () {
+    return {
+      person: {
+        uid: 0,
+        uname: 'null',
+        usex: '男',
+        dateEntry: 'null',
+        department: 'Null',
+        position: 'null',
+        isAdmin: 0
+      }
     }
-};
+  },
+  methods: {
+    handleLogout () {
+      localStorage.removeItem('Authorization')
+      this.$router.push({
+        path: '/'
+      })
+    }
+  },
+  created: function () {
+    const that = this
+    const token = localStorage.getItem('Authorization')
+    const axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        Authorization: token
+      }
+    }
+    this.$ajax
+      .get('/profile', axiosConfig)
+      .then((res) => {
+        if (res.data.code === 200) {
+          that.person = res.data.data
+          that.person.usex = that.person.usex === 'M' ? '男' : '女'
+          that.person.isAdmin =
+                        that.person.isAdmin === 1 ? '管理员' : '普通职工'
+          if (that.person.isAdmin === 1) {
+            this.$store.state.commit('permit')
+          }
+        } else {
+          this.handleLogout()
+        }
+      })
+      .catch()
+  }
+}
 </script>
 <style lang="scss" scoped>
 .wrapper {
