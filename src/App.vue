@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import './css/global.scss'
+
 export default {
   data () {
     return {}
@@ -14,4 +14,13 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+body {
+    background: #f9f9f9;
+}
+
+.title-light {
+    color: #777;
+    font-weight: 500;
+}
+</style>

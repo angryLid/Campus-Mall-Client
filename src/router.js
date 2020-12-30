@@ -11,7 +11,7 @@ Vue.use(VueRouter)
 
 export const router = new VueRouter({
   linkActiveClass: 'active',
-  // mode: "history",
+  mode: 'history',
   routes: [
     {
       path: '/',
