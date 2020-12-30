@@ -44,3 +44,4 @@ jspm_packages
 node_modules 
 
 # compiled
+dist
