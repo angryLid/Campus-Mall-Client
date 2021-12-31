@@ -1,6 +1,7 @@
 <template>
     <div>
-        <router-view> </router-view>
+      Hello Vite & Vue 3
+        <!-- <router-view> </router-view> -->
     </div>
 </template>
 
@@ -14,7 +15,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 body {
     background: #f9f9f9;
 }
