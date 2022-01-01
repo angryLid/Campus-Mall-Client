@@ -1,7 +1,10 @@
-import { createApp } from "vue";
-import App from "./App.vue"
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
 
-createApp(App).mount("#app")
+import { Button, Tabbar, TabbarItem } from 'vant'
+
+createApp(App).use(router).use(Button).use(TabbarItem).use(Tabbar).mount('#app')
 // import Vue from 'vue'
 // import App from './App.vue'
 // import { store } from './store'
