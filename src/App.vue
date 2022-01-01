@@ -1,18 +1,12 @@
 <template>
     <div>
-      Hello Vite & Vue 3
+        Hello Vite & Vue3
         <!-- <router-view> </router-view> -->
     </div>
 </template>
 
-<script>
-
-export default {
-  data () {
-    return {}
-  },
-  methods: {}
-}
+<script lang="ts" setup>
+var a = 222
 </script>
 
 <style scoped>
