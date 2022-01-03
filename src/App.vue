@@ -17,7 +17,7 @@
         >
     </van-tabbar> -->
     <router-view></router-view>
-    <van-tabbar v-model="active" route>
+    <van-tabbar v-model="active" route :class="{ hidden: isHidden }">
         <van-tabbar-item
             v-for="t in tabbarLabels"
             :key="t.name"
@@ -32,36 +32,47 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed, ref } from "vue"
+import { useRoute } from "vue-router"
+
+const route = useRoute()
+
 const tabbarLabels = [
     {
-        name: 'homepage',
-        icon: 'wap-home',
-        text: '首页',
-        route: '/',
+        name: "homepage",
+        icon: "wap-home",
+        text: "首页",
+        route: "/",
     },
     {
-        name: 'post',
-        icon: 'add',
-        text: '发布',
-        route: '/new',
+        name: "post",
+        icon: "add",
+        text: "发布",
+        route: "/new",
     },
     {
-        name: 'message',
-        icon: 'comment',
-        text: '消息',
-        route: '/inbox',
+        name: "message",
+        icon: "comment",
+        text: "消息",
+        route: "/inbox",
     },
     {
-        name: 'account',
-        icon: 'manager',
-        text: '我的',
-        route: '/account',
+        name: "account",
+        icon: "manager",
+        text: "我的",
+        route: "/account",
     },
 ]
-let active = ref('homepage')
+let active = ref("homepage")
 const switchIcon = (name: string, iconName: string) =>
-    active.value === name ? iconName : iconName + '-o'
+    active.value === name ? iconName : iconName + "-o"
+
+type routeNameType = string | symbol | null | undefined
+
+const isFirstLayer = (name: routeNameType) =>
+    !(name === "tab0" || name === "tab1" || name === "tab2" || name === "tab3")
+
+let isHidden = computed(() => isFirstLayer(route.name))
 </script>
 
 <style scoped>
@@ -72,5 +83,8 @@ body {
 .title-light {
     color: #777;
     font-weight: 500;
+}
+.hidden {
+    display: none;
 }
 </style>

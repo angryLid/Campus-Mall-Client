@@ -1,5 +1,5 @@
 <template>
-    <div class="avatar-group">
+    <div class="avatar-group" @click="handleSign">
         <div class="avatar-group-image">
             <van-image
                 :src="src"
@@ -13,8 +13,8 @@
         </div>
 
         <div class="avatar-group-info">
-            <div class="avatar-group-info-username">幸福人生</div>
-            <div class="avatar-group-info-userid">账号:17166669999</div>
+            <div class="avatar-group-info-username">{{ user.name }}</div>
+            <div class="avatar-group-info-userid">{{ user.id }}</div>
         </div>
     </div>
 
@@ -55,8 +55,21 @@
     </van-cell-group>
 </template>
 <script lang="ts" setup>
-const src =
-    'https://qxtcgfrfoka6533icwevygpvpfsol3yqgjijzy6bjebr57runhpq.arweave.net/heYjFiVyge7vaBWJXBn1eWTl7xAyUJzjwUkDHv40ad8'
+import { useRouter } from "vue-router"
+
+const router = useRouter()
+
+import guestAvatar from "../assets/avatar4guest.jpg"
+const src = guestAvatar
+
+let user = {
+    name: "游客, 您好",
+    id: "点击此处注册或登录",
+}
+
+function handleSign() {
+    router.push("/sign")
+}
 </script>
 <style scoped>
 .grid-item-text {

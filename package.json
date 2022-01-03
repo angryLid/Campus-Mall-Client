@@ -2,7 +2,7 @@
 	"name": "vite-vue-typescript-starter",
 	"version": "0.0.0",
 	"scripts": {
-		"dev": "vite",
+		"dev": "vite --host",
 		"build": "vue-tsc --noEmit && vite build",
 		"preview": "vite preview",
 		"lint": "pnpm eslint --ext .ts,.tsx,.js,.jsx,.vue"

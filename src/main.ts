@@ -1,6 +1,6 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import { createApp } from "vue"
+import App from "./App.vue"
+import router from "./router"
 
 import {
     Button,
@@ -13,7 +13,11 @@ import {
     CellGroup,
     Image,
     Search,
-} from 'vant'
+    NavBar,
+    Tab,
+    Tabs,
+    Field,
+} from "vant"
 
 createApp(App)
     .use(router)
@@ -27,7 +31,11 @@ createApp(App)
     .use(CellGroup)
     .use(Image)
     .use(Search)
-    .mount('#app')
+    .use(NavBar)
+    .use(Tab)
+    .use(Tabs)
+    .use(Field)
+    .mount("#app")
 // import Vue from 'vue'
 // import App from './App.vue'
 // import { store } from './store'
