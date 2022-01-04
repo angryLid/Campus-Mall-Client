@@ -4,6 +4,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.8.1
   '@typescript-eslint/parser': ^5.8.1
   '@vitejs/plugin-vue': ^2.0.0
+  axios: ^0.24.0
   eslint: ^8.6.0
   eslint-plugin-vue: ^8.2.0
   typescript: ^4.5.4
@@ -15,6 +16,7 @@ specifiers:
   vue-tsc: ^0.29.8
 
 dependencies:
+  axios: 0.24.0
   vant: 3.4.0_vue@3.2.26
   vue: 3.2.26
   vue-router: 4.0.12_vue@3.2.26
@@ -471,6 +473,14 @@ packages:
   /assert-never/1.2.1:
     resolution: {integrity: sha1-EfDjY78UYgX7CBk7XHuQ9NHPRP4=, tarball: assert-never/download/assert-never-1.2.1.tgz}
     dev: true
+
+  /axios/0.24.0:
+    resolution: {integrity: sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==, tarball: axios/download/axios-0.24.0.tgz}
+    dependencies:
+      follow-redirects: 1.14.6
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /babel-walk/3.0.0-canary-5:
     resolution: {integrity: sha1-9m7Ncpg1eu5ElV8jWm71QhkQSxE=, tarball: babel-walk/download/babel-walk-3.0.0-canary-5.tgz}
@@ -1059,6 +1069,16 @@ packages:
   /flatted/3.2.4:
     resolution: {integrity: sha512-8/sOawo8tJ4QOBX8YlQBMxL8+RLZfxMQOif9o0KUKTNTjMYElWPE0r/m5VNFxTRd0NSw8qSy8dajrwX4RYI1Hw==, tarball: flatted/download/flatted-3.2.4.tgz}
     dev: true
+
+  /follow-redirects/1.14.6:
+    resolution: {integrity: sha512-fhUl5EwSJbbl8AR+uYL2KQDxLkdSjZGR36xy46AO7cOMTrCMON6Sa28FmAnC2tRTDbd/Uuzz3aJBv7EBN7JH8A==, tarball: follow-redirects/download/follow-redirects-1.14.6.tgz}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dev: false
 
   /fs-extra/10.0.0:
     resolution: {integrity: sha1-n/YbZV3eU/s0qC34S7IUzoAuF8E=, tarball: fs-extra/download/fs-extra-10.0.0.tgz}

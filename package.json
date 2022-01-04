@@ -8,6 +8,7 @@
 		"lint": "pnpm eslint --ext .ts,.tsx,.js,.jsx,.vue"
 	},
 	"dependencies": {
+		"axios": "^0.24.0",
 		"vant": "3",
 		"vue": "^3.2.25",
 		"vue-router": "4"
