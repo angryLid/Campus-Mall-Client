@@ -1,33 +1,36 @@
 <template>
-    <!-- <van-tabbar v-model="active">
+    <router-view></router-view>
+
+    <van-tabbar v-model="active" route :class="{ hidden: isHidden }">
         <van-tabbar-item
             :icon="switchIcon('homepage', 'wap-home')"
             name="homepage"
+            replace
+            to="/"
         >
             首页
         </van-tabbar-item>
-        <van-tabbar-item :icon="switchIcon('post', 'add')" name="post"
+        <van-tabbar-item
+            :icon="switchIcon('post', 'add')"
+            name="post"
+            replace
+            to="/new"
             >发布</van-tabbar-item
         >
-        <van-tabbar-item :icon="switchIcon('message', 'comment')" name="message"
+        <van-tabbar-item
+            :icon="switchIcon('message', 'comment')"
+            name="message"
+            replace
+            to="/inbox"
             >消息</van-tabbar-item
         >
-        <van-tabbar-item :icon="switchIcon('account', 'manager')" name="account"
+        <van-tabbar-item
+            :icon="switchIcon('account', 'manager')"
+            name="account"
+            replace
+            to="/account"
             >我的</van-tabbar-item
         >
-    </van-tabbar> -->
-    <router-view></router-view>
-    <van-tabbar v-model="active" route :class="{ hidden: isHidden }">
-        <van-tabbar-item
-            v-for="t in tabbarLabels"
-            :key="t.name"
-            :icon="switchIcon(t.name, t.icon)"
-            :name="t.name"
-            replace
-            :to="t.route"
-        >
-            {{ t.text }}
-        </van-tabbar-item>
     </van-tabbar>
 </template>
 
@@ -35,44 +38,25 @@
 import { computed, ref } from "vue"
 import { useRoute } from "vue-router"
 
-const route = useRoute()
-
-const tabbarLabels = [
-    {
-        name: "homepage",
-        icon: "wap-home",
-        text: "首页",
-        route: "/",
-    },
-    {
-        name: "post",
-        icon: "add",
-        text: "发布",
-        route: "/new",
-    },
-    {
-        name: "message",
-        icon: "comment",
-        text: "消息",
-        route: "/inbox",
-    },
-    {
-        name: "account",
-        icon: "manager",
-        text: "我的",
-        route: "/account",
-    },
-]
-let active = ref("homepage")
-const switchIcon = (name: string, iconName: string) =>
-    active.value === name ? iconName : iconName + "-o"
-
 type routeNameType = string | symbol | null | undefined
 
-const isFirstLayer = (name: routeNameType) =>
-    !(name === "tab0" || name === "tab1" || name === "tab2" || name === "tab3")
+const route = useRoute()
 
-let isHidden = computed(() => isFirstLayer(route.name))
+let active = computed(() => {
+    return route.name as string
+})
+
+let isHidden = computed(() => isNotFirstLayer(route.name))
+
+function switchIcon(name: string, iconName: string) {
+    return active.value === name ? iconName : iconName + "-o"
+}
+
+function isNotFirstLayer(name: routeNameType) {
+    const routeNames = ["homepage", "post", "message", "account"]
+    const matched = routeNames.filter((item) => item === name)
+    return matched.length < 1
+}
 </script>
 
 <style scoped>
