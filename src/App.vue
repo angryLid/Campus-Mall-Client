@@ -35,12 +35,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from "vue"
+import { computed, onMounted } from "vue"
 import { useRoute } from "vue-router"
-
+import { useStore } from "./store"
+import cookies from "./utils/cookies"
 type routeNameType = string | symbol | null | undefined
 
 const route = useRoute()
+const store = useStore()
 
 let active = computed(() => {
     return route.name as string
@@ -48,6 +50,12 @@ let active = computed(() => {
 
 let isHidden = computed(() => isNotFirstLayer(route.name))
 
+onMounted(() => {
+    const jwt = cookies.getItem("user")
+    if (jwt) {
+        store.state.jwt = jwt
+    }
+})
 function switchIcon(name: string, iconName: string) {
     return active.value === name ? iconName : iconName + "-o"
 }

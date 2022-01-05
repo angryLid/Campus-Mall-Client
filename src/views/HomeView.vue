@@ -4,8 +4,12 @@
     </div>
 </template>
 
-<script>
-export default {}
+<script lang="ts" setup>
+import { computed } from "vue"
+import { useStore } from "../store"
+
+const store = useStore()
+const value = computed(() => store.state.jwt)
 </script>
 
 <style lang="scss" scoped></style>

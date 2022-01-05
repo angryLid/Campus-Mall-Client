@@ -1,7 +1,7 @@
 import { createApp } from "vue"
 import App from "./App.vue"
 import router from "./router"
-
+import { store, key } from "./store"
 import {
     Button,
     Tabbar,
@@ -17,10 +17,12 @@ import {
     Tab,
     Tabs,
     Field,
+    Toast,
 } from "vant"
 
 createApp(App)
     .use(router)
+    .use(store, key)
     .use(Button)
     .use(TabbarItem)
     .use(Tabbar)
@@ -35,22 +37,5 @@ createApp(App)
     .use(Tab)
     .use(Tabs)
     .use(Field)
+    .use(Toast)
     .mount("#app")
-// import Vue from 'vue'
-// import App from './App.vue'
-// import { store } from './store'
-// import { router } from './router'
-
-// import axios from 'axios'
-// // import element-ui
-// import ElementUI from 'element-ui'
-// import 'element-ui/lib/theme-chalk/index.css'
-// axios.defaults.baseURL = 'http://localhost:8080'
-// Vue.prototype.$ajax = axios
-// Vue.use(ElementUI)
-
-// new Vue({
-//   router,
-//   store,
-//   render: (h) => h(App)
-// }).$mount('#app')

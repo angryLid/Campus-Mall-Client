@@ -10,7 +10,7 @@ const routes = [
     { path: "/new", component: PostView, name: "post" },
     { path: "/inbox", component: InboxView, name: "message" },
     { path: "/account", component: AccountView, name: "account" },
-    { path: "/sign", component: SignView },
+    { path: "/sign", component: SignView, name: "sign" },
 ]
 
 const router = createRouter({

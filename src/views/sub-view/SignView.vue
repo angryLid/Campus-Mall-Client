@@ -22,7 +22,7 @@ const router = useRouter()
 const active = ref("sign-in")
 
 function onClickLeft() {
-    return router.back()
+    return router.replace({ name: "account" })
 }
 </script>
 
