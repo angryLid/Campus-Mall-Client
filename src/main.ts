@@ -18,6 +18,8 @@ import {
     Tabs,
     Field,
     Toast,
+    Form,
+    Uploader,
 } from "vant"
 
 createApp(App)
@@ -38,4 +40,6 @@ createApp(App)
     .use(Tabs)
     .use(Field)
     .use(Toast)
+    .use(Form)
+    .use(Uploader)
     .mount("#app")
