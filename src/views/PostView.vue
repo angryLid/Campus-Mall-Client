@@ -5,10 +5,10 @@
                 v-model="title"
                 rows="1"
                 autosize
-                label="物品名称"
+                :label="fieldTitle.label"
                 type="textarea"
                 maxlength="50"
-                placeholder="品牌, 型号名等"
+                :placeholder="fieldTitle.placeholder"
                 show-word-limit
             />
         </van-cell-group>
@@ -17,10 +17,10 @@
                 v-model="description"
                 rows="3"
                 autosize
-                label="物品描述"
+                :label="fieldDesc.label"
                 type="textarea"
                 maxlength="500"
-                placeholder="请描述新旧程度, 是否有功能受损等"
+                :placeholder="fieldDesc.placeholder"
                 show-word-limit
             />
         </van-cell-group>
@@ -28,34 +28,44 @@
         <van-cell-group>
             <van-field name="uploader" label="文件上传">
                 <template #input>
-                    <van-uploader v-model="images" :after-read="afterRead" />
+                    <van-uploader v-model="images" />
                 </template>
             </van-field>
         </van-cell-group>
 
-        <van-cell-group inset>
+        <van-cell-group>
             <van-field
                 v-model="price"
                 name="价格"
-                label="价格"
-                placeholder="0.00"
-                type="number"
+                :label="fieldPrice.label"
+                :placeholder="fieldPrice.placeholder"
                 :rules="[{ required: true, message: '请填写价格' }]"
+                @focusin="onPriceFocusIn"
+                @click="onPriceFocusIn"
+                readonly
             />
         </van-cell-group>
+
+        <van-number-keyboard
+            :show="show"
+            theme="custom"
+            extra-key="."
+            close-button-text="完成"
+            @blur="show = false"
+            @input="onInput"
+            @delete="onDelete"
+        />
         <div style="margin: 16px">
             <van-button round block type="primary" native-type="submit">
                 提交
             </van-button>
         </div>
     </van-form>
-
-    <img :src="src" alt="Red dot" />
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, watchEffect } from "vue"
 import type { Ref } from "vue"
+import { ref, watchEffect } from "vue"
 import ajax from "../utils/ajax"
 
 interface Image {
@@ -63,12 +73,71 @@ interface Image {
 }
 
 // Form model part.
-const title = ref("测试标题")
-const description = ref("测试描述")
+const title = ref("红米K40 12+256")
+const description = ref("9新箱说全,未拆修")
 const images: Ref<Image[]> = ref([])
-const price = ref("0")
+const price: Ref<string> = ref("")
 
-const src = ref("")
+const show = ref(false)
+
+const fieldTitle = {
+    label: "物品名称",
+    placeholder: "包括品牌, 具体型号名等",
+}
+
+const fieldDesc = {
+    label: "物品描述",
+    placeholder: "请尽可能详细地描述新旧程度, 是否有功能受损等",
+}
+
+const fieldPrice = {
+    label: "价格",
+    placeholder: "价格区间 0.00 - 9999.99",
+}
+function onInput(inputStr: string | number) {
+    const isDot = inputStr === "."
+    if (price.value.length === 0 && isDot) {
+        return
+    }
+
+    if (price.value === "0") {
+        if (isDot) {
+            price.value += inputStr
+        } else {
+            return
+        }
+    }
+
+    if (price.value.includes(".")) {
+        if (isDot) {
+            return
+        }
+
+        const re = /\.[0-9]{2}$/gm
+        if (re.test(price.value)) {
+            return
+        } else {
+            price.value += inputStr
+            return
+        }
+    }
+
+    if (price.value.length >= 4 && !isDot) {
+        return
+    }
+
+    price.value += inputStr
+}
+
+function onDelete() {
+    if (price.value.length > 0) {
+        price.value = price.value.substring(0, price.value.length - 1)
+    }
+}
+
+function onPriceFocusIn() {
+    show.value = true
+}
 function onSubmit() {
     const prePost: Array<string> = []
     images.value.forEach((image) => {
@@ -83,10 +152,6 @@ function onSubmit() {
     }).then((res) => {
         console.log(res)
     })
-}
-
-const afterRead = (file: object) => {
-    //
 }
 
 watchEffect(() => {

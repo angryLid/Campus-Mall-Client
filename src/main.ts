@@ -1,31 +1,34 @@
-import { createApp } from "vue"
-import App from "./App.vue"
-import router from "./router"
-import { store, key } from "./store"
 import {
     Button,
-    Tabbar,
-    TabbarItem,
+    Card,
+    Cell,
+    CellGroup,
+    Field,
+    Form,
     Grid,
     GridItem,
     Icon,
-    Cell,
-    CellGroup,
     Image,
-    Search,
     NavBar,
+    NumberKeyboard,
+    Search,
     Tab,
+    Tabbar,
+    TabbarItem,
     Tabs,
-    Field,
     Toast,
-    Form,
     Uploader,
 } from "vant"
+import { createApp } from "vue"
+import App from "./App.vue"
+import router from "./router"
+import { key, store } from "./store"
 
 createApp(App)
     .use(router)
     .use(store, key)
     .use(Button)
+    .use(Card)
     .use(TabbarItem)
     .use(Tabbar)
     .use(Grid)
@@ -42,4 +45,5 @@ createApp(App)
     .use(Toast)
     .use(Form)
     .use(Uploader)
+    .use(NumberKeyboard)
     .mount("#app")
