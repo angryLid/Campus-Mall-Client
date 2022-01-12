@@ -28,7 +28,7 @@
         <van-cell-group>
             <van-field name="uploader" label="文件上传">
                 <template #input>
-                    <van-uploader v-model="images" />
+                    <van-uploader v-model="images" :max-count="6" />
                 </template>
             </van-field>
         </van-cell-group>
@@ -64,19 +64,17 @@
 </template>
 
 <script lang="ts" setup>
+import type { UploaderFileListItem } from "vant"
 import type { Ref } from "vue"
 import { ref, watchEffect } from "vue"
 import ajax from "../utils/ajax"
 
-interface Image {
-    content: string
-}
-
+// TODO: 前端缩图
 // Form model part.
 const title = ref("红米K40 12+256")
 const description = ref("9新箱说全,未拆修")
-const images: Ref<Image[]> = ref([])
-const price: Ref<string> = ref("")
+const images: Ref<UploaderFileListItem[]> = ref([])
+const price: Ref<string> = ref("999.99")
 
 const show = ref(false)
 
@@ -139,16 +137,26 @@ function onPriceFocusIn() {
     show.value = true
 }
 function onSubmit() {
-    const prePost: Array<string> = []
-    images.value.forEach((image) => {
-        prePost.push(image.content)
+    const formData = new FormData()
+
+    images.value.forEach((image, index) => {
+        if (index > 5) {
+            return
+        }
+        formData.append(
+            `image${index}`,
+            image.file ? image.file : "Exception: Upload Failed."
+        )
     })
 
-    ajax.post("/upload/", {
-        images: prePost,
-        title: title.value,
-        description: description.value,
-        price: parseInt(price.value),
+    formData.append("title", title.value)
+    formData.append("description", description.value)
+    formData.append("price", price.value)
+
+    ajax.post("/upload/", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
     }).then((res) => {
         console.log(res)
     })
