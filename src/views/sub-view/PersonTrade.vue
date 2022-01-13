@@ -11,6 +11,8 @@
 </template>
 
 <script lang="ts" setup>
+import { onMounted } from "vue"
+import ajax from "../../utils/ajax"
 const products = [
     {
         price: "2.00",
@@ -25,6 +27,16 @@ const products = [
         thumb: "https://img.yzcdn.cn/vant/ipad.jpeg",
     },
 ]
+
+onMounted(() => {
+    ajax.get("/home/").then((res) => {
+        console.log(
+            "%c [res]:",
+            "color:white;background:blue;font-size:13px",
+            res
+        )
+    })
+})
 </script>
 
 <style scoped></style>
