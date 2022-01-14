@@ -153,7 +153,7 @@ function onSubmit() {
     formData.append("description", description.value)
     formData.append("price", price.value)
 
-    ajax.post("/upload/", formData, {
+    ajax.post("/product/", formData, {
         headers: {
             "Content-Type": "multipart/form-data",
         },
