@@ -3,40 +3,59 @@
         v-for="(p, i) in products"
         :key="i"
         :price="p.price"
-        :desc="`${p.desc} 发布`"
+        :desc="p.description"
         :title="p.title"
-        :thumb="p.thumb"
+        :thumb="`http://119.91.147.80:9000/mall/${p.image0}`"
+        @click="onClick(p.id)"
+    >
+    </van-card>
+    <van-card
+        price="hidden"
+        desc="hidden"
+        title="hidden"
+        thumb="hidden"
+        style="visibility: hidden"
     >
     </van-card>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from "vue"
+import type { Ref } from "vue"
+import { onMounted, ref } from "vue"
+import { useRouter } from "vue-router"
 import ajax from "../../utils/ajax"
-const products = [
-    {
-        price: "2.00",
-        desc: "开发者",
-        title: "八成新 红米K40 12+256",
-        thumb: "https://img.yzcdn.cn/vant/ipad.jpeg",
-    },
-    {
-        price: "2.00",
-        desc: "描述信息",
-        title: "商品标题",
-        thumb: "https://img.yzcdn.cn/vant/ipad.jpeg",
-    },
-]
+
+const router = useRouter()
+
+interface Product {
+    id: string
+    title: string
+    description: string
+    price: string
+    image0: string
+}
+const products: Ref<Product[]> = ref([])
 
 onMounted(() => {
-    ajax.get("/home/").then((res) => {
+    ajax.get("/product/").then((res) => {
         console.log(
             "%c [res]:",
             "color:white;background:blue;font-size:13px",
-            res
+            res.data.data
         )
+        products.value = res.data.data
     })
 })
+
+function onClick(id: string) {
+    console.log("%c [id]:", "color:white;background:blue;font-size:13px", id)
+    router.push({
+        name: "detail",
+        params: {
+            id,
+        },
+    })
+}
 </script>
 
 <style scoped></style>
