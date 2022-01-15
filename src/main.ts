@@ -1,8 +1,12 @@
 import {
+    ActionBar,
+    ActionBarButton,
+    ActionBarIcon,
     Button,
     Card,
     Cell,
     CellGroup,
+    Col,
     Field,
     Form,
     Grid,
@@ -11,6 +15,7 @@ import {
     Image,
     NavBar,
     NumberKeyboard,
+    Row,
     Search,
     Tab,
     Tabbar,
@@ -24,10 +29,16 @@ import App from "./App.vue"
 import router from "./router"
 import { key, store } from "./store"
 
-createApp(App)
-    .use(router)
-    .use(store, key)
-    .use(Button)
+const app = createApp(App)
+
+app.use(router).use(store, key)
+
+app.use(Button)
+    .use(ActionBarButton)
+    .use(ActionBar)
+    .use(ActionBarIcon)
+    .use(Row)
+    .use(Col)
     .use(Card)
     .use(TabbarItem)
     .use(Tabbar)
@@ -46,4 +57,5 @@ createApp(App)
     .use(Form)
     .use(Uploader)
     .use(NumberKeyboard)
-    .mount("#app")
+
+app.mount("#app")

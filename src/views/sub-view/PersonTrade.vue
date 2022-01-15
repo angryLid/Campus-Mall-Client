@@ -5,7 +5,7 @@
         :price="p.price"
         :desc="p.description"
         :title="p.title"
-        :thumb="`http://119.91.147.80:9000/mall/${p.image0}`"
+        :thumb="url + p.image0"
         @click="onClick(p.id)"
     >
     </van-card>
@@ -23,37 +23,27 @@
 import type { Ref } from "vue"
 import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
+import type { Product } from "../../interface/data_transfer"
+import { useStore } from "../../store"
 import ajax from "../../utils/ajax"
 
 const router = useRouter()
+const store = useStore()
 
-interface Product {
-    id: string
-    title: string
-    description: string
-    price: string
-    image0: string
-}
 const products: Ref<Product[]> = ref([])
+
+const url = store.state.imageHostUrl
 
 onMounted(() => {
     ajax.get("/product/").then((res) => {
-        console.log(
-            "%c [res]:",
-            "color:white;background:blue;font-size:13px",
-            res.data.data
-        )
         products.value = res.data.data
     })
 })
 
-function onClick(id: string) {
-    console.log("%c [id]:", "color:white;background:blue;font-size:13px", id)
+function onClick(id: number) {
     router.push({
         name: "detail",
-        params: {
-            id,
-        },
+        params: { id },
     })
 }
 </script>
