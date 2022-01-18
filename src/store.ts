@@ -1,10 +1,11 @@
 import { InjectionKey } from "vue"
 import { createStore, Store, useStore as baseUseStore } from "vuex"
+import { BaseAccountInfo } from "./interface/data_transfer"
 
 export interface State {
     count: number
     jwt: string
-    user: Record<string, object>
+    user: BaseAccountInfo
     imageHostUrl: string
 }
 
@@ -15,7 +16,12 @@ export const store = createStore<State>({
         return {
             count: 0,
             jwt: "",
-            user: {},
+            user: {
+                name: "游客, 您好",
+                telephone: "点击此处注册或登录",
+                followed: 0,
+                following: 0,
+            },
             imageHostUrl: "http://119.91.147.80:9000/mall/",
         }
     },

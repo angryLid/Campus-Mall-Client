@@ -16,3 +16,10 @@ export interface User {
     id: string
     nikename: string
 }
+
+export interface BaseAccountInfo {
+    name: string
+    telephone: string
+    followed: number
+    following: number
+}

@@ -9,13 +9,32 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from "vue"
-// import { useStore } from "../store"
+import { computed, onMounted, ref } from "vue"
+import { useStore } from "../store"
+import ajax from "../utils/ajax"
+import docCookies from "../utils/cookies"
 import PersonTrade from "./sub-view/PersonTrade.vue"
 
 const active = ref(0)
-// const store = useStore()
+const store = useStore()
 const toBeSearched = computed(() => "")
+
+onMounted(() => {
+    const jwt = docCookies.getItem("auth")
+    if (jwt) {
+        ajax.get("/user/?token=" + jwt).then((res) => {
+            if (!res.data) {
+                docCookies.removeItem("auth", null, null)
+            } else {
+                ajax.get("/user/myaccount/", {
+                    headers: { Authorization: jwt },
+                }).then((res) => {
+                    store.state.user = res.data.data
+                })
+            }
+        })
+    }
+})
 </script>
 
 <style lang="scss" scoped></style>

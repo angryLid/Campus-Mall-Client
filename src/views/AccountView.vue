@@ -18,29 +18,10 @@
         </div>
     </div>
 
-    <van-grid>
-        <van-grid-item
-            ><span>{{ favorite < 0 ? "-" : favorite }}</span> <span>收藏</span>
-        </van-grid-item>
-        <van-grid-item
-            ><span>{{ history < 0 ? "-" : history }}</span>
-            <span>历史浏览</span>
-        </van-grid-item>
-        <van-grid-item
-            ><span>{{ following < 0 ? "-" : following }}</span>
-            <span>关注</span>
-        </van-grid-item>
-        <van-grid-item
-            ><span>{{ followed < 0 ? "-" : followed }}</span
-            ><span>粉丝</span>
-        </van-grid-item>
-    </van-grid>
+    <my-friends> </my-friends>
+
     <div class="grid-title">我的交易</div>
     <van-grid>
-        <!-- <van-grid-item icon="bag" text="我发布的" />
-        <van-grid-item icon="gold-coin" text="我卖出的" />
-        <van-grid-item icon="column" text="我买到的" />
-        <van-grid-item icon="send-gift" text="我可转卖的" /> -->
         <van-grid-item>
             <van-icon name="bag" color="#ba391a" size="32"></van-icon>
             <span class="grid-item-text">我发布的</span>
@@ -66,55 +47,31 @@
     </van-cell-group>
 </template>
 <script lang="ts" setup>
-import { computed, onMounted, ref } from "vue"
+import { computed, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import guestAvatar from "../assets/avatar4guest.jpg"
-import ajax from "../utils/ajax"
+import MyFriends from "../components/MyFriends.vue"
 import { useStore } from "../store"
-
+import ajax from "../utils/ajax"
+import docCookies from "../utils/cookies"
 const src = guestAvatar
 const router = useRouter()
 const store = useStore()
-
-const favorite = ref(-1)
-const history = ref(-1)
-const following = computed(() => {
-    if (store.state.user.following >= 0) return store.state.user.following
-    else return -1
-})
-const followed = computed(() => {
-    if (store.state.user.followed >= 0) return store.state.user.followed
-    else return -1
-})
 
 let user = computed(() => {
     return {
         name: store.state.user.name,
         id: store.state.user.telephone,
-        // name: "游客, 您好",
-        // id: "点击此处注册或登录",
     }
 })
-// let user = computed(() => {
-//     if (
-//         store.state.user.name.length > 0 &&
-//         store.state.user.telephone.length > 0
-//     )
-//         return {
-//             name: store.state.user.name,
-//             id: store.state.user.telephone,
-//         }
-//     else
-//         return {
-//             name: "游客, 您好",
-//             id: "点击此处注册或登录",
-//         }
-// })
 
 onMounted(() => {
-    ajax.get("/user/myaccount/", {
-        headers: { Authorization: store.state.jwt },
-    }).then((res) => (store.state.user = res.data.data))
+    const jwt = docCookies.getItem("auth")
+    if (jwt) {
+        ajax.get("/user/myaccount/", {
+            headers: { Authorization: jwt },
+        }).then((res) => (store.state.user = res.data.data))
+    }
 })
 
 function handleSign() {
