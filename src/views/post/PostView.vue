@@ -67,7 +67,7 @@
 import type { UploaderFileListItem } from "vant"
 import type { Ref } from "vue"
 import { ref, watchEffect } from "vue"
-import ajax from "../utils/ajax"
+import ajax from "../../utils/ajax"
 
 // TODO: 前端缩图
 // Form model part.

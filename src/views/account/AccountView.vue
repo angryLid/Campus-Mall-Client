@@ -49,11 +49,11 @@
 <script lang="ts" setup>
 import { computed, onMounted } from "vue"
 import { useRouter } from "vue-router"
-import guestAvatar from "../assets/avatar4guest.jpg"
-import MyFriends from "../components/MyFriends.vue"
-import { useStore } from "../store"
-import ajax from "../utils/ajax"
-import docCookies from "../utils/cookies"
+import guestAvatar from "../../assets/avatar4guest.jpg"
+import MyFriends from "../../components/MyFriends.vue"
+import { useStore } from "../../store"
+import ajax from "../../utils/ajax"
+import docCookies from "../../utils/cookies"
 const src = guestAvatar
 const router = useRouter()
 const store = useStore()

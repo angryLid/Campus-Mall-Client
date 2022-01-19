@@ -10,10 +10,10 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, ref } from "vue"
-import { useStore } from "../store"
-import ajax from "../utils/ajax"
-import docCookies from "../utils/cookies"
-import PersonTrade from "./sub-view/PersonTrade.vue"
+import { useStore } from "../../store"
+import ajax from "../../utils/ajax"
+import docCookies from "../../utils/cookies"
+import PersonTrade from "./PersonTrade.vue"
 
 const active = ref(0)
 const store = useStore()

@@ -1,10 +1,10 @@
 import { createRouter, createWebHashHistory } from "vue-router"
-import AccountView from "./views/AccountView.vue"
-import HomeView from "./views/HomeView.vue"
-import InboxView from "./views/InboxView.vue"
-import PostView from "./views/PostView.vue"
+import AccountView from "./views/account/AccountView.vue"
+import SignView from "./views/account/SignView.vue"
+import HomeView from "./views/home/HomeView.vue"
+import InboxView from "./views/inbox/InboxView.vue"
+import PostView from "./views/post/PostView.vue"
 import ProductDetail from "./views/sub-view/ProductDetail.vue"
-import SignView from "./views/sub-view/SignView.vue"
 
 const routes = [
     { path: "/", component: HomeView, name: "homepage" },
