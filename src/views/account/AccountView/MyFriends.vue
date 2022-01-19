@@ -21,7 +21,7 @@
 
 <script lang="ts" setup>
 import { computed, ref } from "vue"
-import { useStore } from "../store"
+import { useStore } from "../../../store"
 
 const store = useStore()
 const favorite = ref(-1)

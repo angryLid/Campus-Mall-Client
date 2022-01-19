@@ -18,42 +18,21 @@
         </div>
     </div>
 
-    <my-friends> </my-friends>
-
-    <div class="grid-title">我的交易</div>
-    <van-grid>
-        <van-grid-item>
-            <van-icon name="bag" color="#ba391a" size="32"></van-icon>
-            <span class="grid-item-text">我发布的</span>
-        </van-grid-item>
-        <van-grid-item>
-            <van-icon name="gold-coin" color="#197dbb" size="32"></van-icon>
-            <span class="grid-item-text">我卖出的</span>
-        </van-grid-item>
-        <van-grid-item>
-            <van-icon name="column" color="#ba830c" size="32"></van-icon>
-            <span class="grid-item-text">我买到的</span>
-        </van-grid-item>
-        <van-grid-item>
-            <van-icon name="send-gift" color="#08946e" size="32"></van-icon>
-            <span class="grid-item-text">我可转卖的</span>
-        </van-grid-item>
-    </van-grid>
-    <van-cell-group class="cell-group">
-        <van-cell title="身份认证" icon="gem" />
-        <van-cell title="收货地址" icon="location" />
-        <van-cell title="客服中心" icon="service" />
-        <van-cell title="账户设置" icon="setting" />
-    </van-cell-group>
+    <my-friends />
+    <my-trans />
+    <my-settings />
 </template>
 <script lang="ts" setup>
 import { computed, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import guestAvatar from "../../assets/avatar4guest.jpg"
-import MyFriends from "../../components/MyFriends.vue"
 import { useStore } from "../../store"
 import ajax from "../../utils/ajax"
 import docCookies from "../../utils/cookies"
+import MyFriends from "./AccountView/MyFriends.vue"
+import MySettings from "./AccountView/MySettings.vue"
+import MyTrans from "./AccountView/MyTrans.vue"
+
 const src = guestAvatar
 const router = useRouter()
 const store = useStore()
@@ -79,19 +58,6 @@ function handleSign() {
 }
 </script>
 <style scoped>
-.grid-item-text {
-    font-size: 14px;
-}
-.grid-title {
-    color: #525252;
-    padding-left: 24px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-}
-.cell-group {
-    margin-top: 30px;
-}
-
 .avatar-group {
     display: flex;
     margin-top: 20px;
