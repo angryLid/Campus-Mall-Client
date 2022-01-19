@@ -30,9 +30,9 @@
 <script lang="ts" setup>
 import { reactive } from "vue"
 import { useRouter } from "vue-router"
-import { useStore } from "../store"
-import ajax from "../utils/ajax"
-import cookies from "../utils/cookies"
+import { useStore } from "../../../store"
+import ajax from "../../../utils/ajax"
+import cookies from "../../../utils/cookies"
 
 const router = useRouter()
 const store = useStore()

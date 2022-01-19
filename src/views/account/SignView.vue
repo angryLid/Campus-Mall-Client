@@ -15,8 +15,8 @@
 import { ref } from "vue"
 import { useRouter } from "vue-router"
 
-import SignIn from "../../components/SignIn.vue"
-import SignUp from "../../components/SignUp.vue"
+import SignIn from "./SignView/SignIn.vue"
+import SignUp from "./SignView/SignUp.vue"
 
 const router = useRouter()
 const active = ref("sign-in")

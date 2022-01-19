@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@types/node': ^17.0.10
   '@typescript-eslint/eslint-plugin': ^5.8.1
   '@typescript-eslint/parser': ^5.8.1
   '@vitejs/plugin-vue': ^2.0.0
@@ -24,6 +25,7 @@ dependencies:
   vuex: 4.0.2_vue@3.2.26
 
 devDependencies:
+  '@types/node': 17.0.10
   '@typescript-eslint/eslint-plugin': 5.8.1_13039593e64cd539d0b4c5c2da390958
   '@typescript-eslint/parser': 5.8.1_eslint@8.6.0+typescript@4.5.4
   '@vitejs/plugin-vue': 2.0.1_vite@2.7.10+vue@3.2.26
@@ -137,6 +139,10 @@ packages:
 
   /@types/json-schema/7.0.9:
     resolution: {integrity: sha1-l+3JA36gw4WFMgsolk3eOznkZg0=, tarball: '@types/json-schema/download/@types/json-schema-7.0.9.tgz?cache=0&sync_timestamp=1637272400115&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fjson-schema%2Fdownload%2F%40types%2Fjson-schema-7.0.9.tgz'}
+    dev: true
+
+  /@types/node/17.0.10:
+    resolution: {integrity: sha512-S/3xB4KzyFxYGCppyDt68yzBU9ysL88lSdIah4D6cptdcltc4NCPCAMc0+PCpg/lLIyC7IPvj2Z52OJWeIUkog==, tarball: '@types/node/download/@types/node-17.0.10.tgz'}
     dev: true
 
   /@typescript-eslint/eslint-plugin/5.8.1_13039593e64cd539d0b4c5c2da390958:

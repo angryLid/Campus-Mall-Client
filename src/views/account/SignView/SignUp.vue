@@ -32,7 +32,7 @@
 <script lang="ts" setup>
 import { Toast } from "vant"
 import { ref } from "vue"
-import ajax from "../utils/ajax"
+import ajax from "../../../utils/ajax"
 
 const telephone = ref("")
 

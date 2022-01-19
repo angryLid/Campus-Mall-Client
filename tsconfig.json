@@ -13,7 +13,16 @@
         "lib": [
             "ESNext",
             "DOM"
-        ]
+        ],
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ],
+            "local/*": [
+                "../path/to/local/modules/*"
+            ]
+        }
     },
     "include": [
         "src/**/*.ts",
