@@ -48,7 +48,10 @@ function handleSubmit() {
         ajax.post("/user/signup/", {
             telephone: telephone.value,
             password: password.value,
-        }).then((res) => console.log(res))
+        }).then((res) => {
+            console.log(res)
+            telephone.value = Number.parseInt(telephone.value) + 1 + ""
+        })
     }
 }
 
