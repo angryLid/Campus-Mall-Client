@@ -30,8 +30,8 @@ const store = useStore()
 
 let user = computed(() => {
     return {
-        name: store.state.user.name,
-        id: store.state.user.telephone,
+        name: "store.state.user.name",
+        id: "store.state.user.telephone",
     }
 })
 function handleSign() {

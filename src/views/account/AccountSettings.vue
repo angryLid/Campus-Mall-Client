@@ -10,7 +10,6 @@ const router = useRouter()
 const store = useStore()
 
 function onClick() {
-    // docCookies.removeItem("auth", null, null)
     store.auth = ""
     router.replace({ name: "account" })
 }

@@ -32,7 +32,6 @@ import { useStore } from "@/store"
 import { useAxios } from "@/utils/ajax"
 import { reactive } from "vue"
 import { useRouter } from "vue-router"
-// import cookies from "../../../utils/cookies"
 
 const router = useRouter()
 const store = useStore()
@@ -42,19 +41,18 @@ const model = reactive({
     password: "",
 })
 
-function handleSubmit() {
-    axios
-        .post("/user/signin/", {
-            telephone: model.telephone,
-            password: model.password,
-        })
-        .then((res) => {
-            if (res.data.code === 200) {
-                // cookies.setItem("auth", res.data.data)
-                store.auth = res.data.data
-                router.replace({ name: "homepage" })
-            }
-        })
+async function handleSubmit() {
+    const req = await axios.post("/user/signin/", {
+        telephone: model.telephone,
+        password: model.password,
+    })
+
+    const resp = req.data
+
+    if (resp.code === 200) {
+        store.auth = resp.data
+        router.replace({ name: "homepage" })
+    }
 }
 </script>
 

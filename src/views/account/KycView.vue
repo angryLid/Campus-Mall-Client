@@ -19,8 +19,12 @@ import { useRouter } from "vue-router"
 const axios = useAxios()
 onMounted(async () => {
     const req = await axios.get("/user/myaccount/roletype/")
+
     const resp = await req.data
 
+    if (resp.code !== 200) {
+        return
+    }
     console.log(
         "%c [resp]:",
         "color:white;background:blue;font-size:13px",
@@ -30,7 +34,7 @@ onMounted(async () => {
 })
 const router = useRouter()
 
-const role = ref("未知")
+const role = ref("_")
 
 function getRole(key: string) {
     const map = new Map()

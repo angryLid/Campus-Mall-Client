@@ -27,15 +27,15 @@ const store = useStore()
 const favorite = ref(-1)
 const history = ref(-1)
 const following = computed(() => {
-    if (store.state.user.following >= 0) {
-        return store.state.user.following
+    if (store.user.following >= 0) {
+        return store.user.following
     } else {
         return -1
     }
 })
 const followed = computed(() => {
-    if (store.state.user.followed >= 0) {
-        return store.state.user.followed
+    if (store.user.followed >= 0) {
+        return store.user.followed
     } else {
         return -1
     }
