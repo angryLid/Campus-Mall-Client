@@ -30,10 +30,11 @@
 </template>
 
 <script lang="ts" setup>
+import { useAxios } from "@/utils/ajax"
 import { Toast } from "vant"
 import { ref } from "vue"
-import ajax from "../../../utils/ajax"
 
+const axios = useAxios()
 const telephone = ref("")
 
 const password = ref("")
@@ -45,13 +46,15 @@ function handleSubmit() {
     if (!verified) {
         Toast.fail("您输入的信息可能有误, 请检查")
     } else {
-        ajax.post("/user/signup/", {
-            telephone: telephone.value,
-            password: password.value,
-        }).then((res) => {
-            console.log(res)
-            telephone.value = Number.parseInt(telephone.value) + 1 + ""
-        })
+        axios
+            .post("/user/signup/", {
+                telephone: telephone.value,
+                password: password.value,
+            })
+            .then((res) => {
+                console.log(res)
+                telephone.value = Number.parseInt(telephone.value) + 1 + ""
+            })
     }
 }
 

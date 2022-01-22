@@ -1,3 +1,4 @@
+import { createPinia } from "pinia"
 import {
     ActionBar,
     ActionBarButton,
@@ -27,12 +28,15 @@ import {
 import { createApp } from "vue"
 import App from "./App.vue"
 import router from "./router"
-import { key, store } from "./store"
-
 const app = createApp(App)
 
-app.use(router).use(store, key)
+// 注册路由
+app.use(router)
 
+// 注册状态库
+app.use(createPinia())
+
+// 注册组件
 app.use(Button)
     .use(ActionBarButton)
     .use(ActionBar)

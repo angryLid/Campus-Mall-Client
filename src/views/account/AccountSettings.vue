@@ -3,10 +3,16 @@
 </template>
 
 <script lang="ts" setup>
-import docCookies from "@/utils/cookies"
+import { useStore } from "@/store"
+import { useRouter } from "vue-router"
+
+const router = useRouter()
+const store = useStore()
 
 function onClick() {
-    docCookies.removeItem("auth", null, null)
+    // docCookies.removeItem("auth", null, null)
+    store.auth = ""
+    router.replace({ name: "account" })
 }
 </script>
 

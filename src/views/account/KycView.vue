@@ -12,24 +12,30 @@
 </template>
 
 <script lang="ts" setup>
-import ajax from "@/utils/ajax"
-import { onMounted } from "vue"
+import { useAxios } from "@/utils/ajax"
+import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 
+const axios = useAxios()
 onMounted(async () => {
-    const req = await ajax.get("/user/myaccount/roletype/")
+    const req = await axios.get("/user/myaccount/roletype/")
     const resp = await req.data
 
-    role = getRole(resp.data)
+    console.log(
+        "%c [resp]:",
+        "color:white;background:blue;font-size:13px",
+        resp
+    )
+    role.value = getRole(resp.data)
 })
 const router = useRouter()
 
-let role = "尚未认证"
+const role = ref("未知")
 
 function getRole(key: string) {
     const map = new Map()
     map.set("unknown", "尚未认证")
-
+    map.set("student_verified", "已认证的学生")
     return map.get(key)
 }
 function onClickLeft() {
@@ -37,7 +43,7 @@ function onClickLeft() {
 }
 
 async function getRoleType() {
-    const req = await ajax.get("/user/myaccount/roletype/")
+    const req = await axios.get("/user/myaccount/roletype/")
     const resp = await req.data
     return resp
 }

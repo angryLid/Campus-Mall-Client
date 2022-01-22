@@ -28,31 +28,33 @@
 </template>
 
 <script lang="ts" setup>
+import { useStore } from "@/store"
+import { useAxios } from "@/utils/ajax"
 import { reactive } from "vue"
 import { useRouter } from "vue-router"
-import { useStore } from "../../../store"
-import ajax from "../../../utils/ajax"
-import cookies from "../../../utils/cookies"
+// import cookies from "../../../utils/cookies"
 
 const router = useRouter()
 const store = useStore()
-
+const axios = useAxios()
 const model = reactive({
     telephone: "",
     password: "",
 })
 
 function handleSubmit() {
-    ajax.post("/user/signin/", {
-        telephone: model.telephone,
-        password: model.password,
-    }).then((res) => {
-        if (res.data.code === 200) {
-            cookies.setItem("auth", res.data.data)
-            store.state.jwt = res.data.data
-            router.replace({ name: "homepage" })
-        }
-    })
+    axios
+        .post("/user/signin/", {
+            telephone: model.telephone,
+            password: model.password,
+        })
+        .then((res) => {
+            if (res.data.code === 200) {
+                // cookies.setItem("auth", res.data.data)
+                store.auth = res.data.data
+                router.replace({ name: "homepage" })
+            }
+        })
 }
 </script>
 

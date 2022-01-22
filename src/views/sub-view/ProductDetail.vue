@@ -41,14 +41,14 @@
 </template>
 
 <script lang="ts" setup>
+import { useAxios } from "@/utils/ajax"
 import type { Ref } from "vue"
 import { computed, onMounted, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import guestAvatar from "../../assets/avatar4guest.jpg"
 import ImageSet from "../../components/ImageSet.vue"
 import { Product, User as Publisher } from "../../interface/data_transfer"
-import ajax from "../../utils/ajax"
-
+const ajax = useAxios()
 const route = useRoute()
 const router = useRouter()
 const id = computed(() => route.params.id)

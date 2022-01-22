@@ -64,11 +64,12 @@
 </template>
 
 <script lang="ts" setup>
+import { useAxios } from "@/utils/ajax"
 import type { UploaderFileListItem } from "vant"
 import type { Ref } from "vue"
 import { ref, watchEffect } from "vue"
-import ajax from "../../utils/ajax"
 
+const axios = useAxios()
 // TODO: 前端缩图
 // Form model part.
 const title = ref("红米K40 12+256")
@@ -153,13 +154,15 @@ function onSubmit() {
     formData.append("description", description.value)
     formData.append("price", price.value)
 
-    ajax.post("/product/", formData, {
-        headers: {
-            "Content-Type": "multipart/form-data",
-        },
-    }).then((res) => {
-        console.log(res)
-    })
+    axios
+        .post("/product/", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
+        .then((res) => {
+            console.log(res)
+        })
 }
 
 watchEffect(() => {
