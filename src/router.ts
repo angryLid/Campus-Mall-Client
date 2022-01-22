@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router"
+import AccountSettings from "./views/account/AccountSettings.vue"
 import AccountView from "./views/account/AccountView.vue"
 import KycView from "./views/account/KycView.vue"
 import SignView from "./views/account/SignView.vue"
@@ -14,6 +15,7 @@ const routes = [
     { path: "/sign", component: SignView, name: "sign" },
     { path: "/detail/:id", component: ProductDetail, name: "detail" },
     { path: "/kyc", component: KycView, name: "kyc" },
+    { path: "/settings", component: AccountSettings, name: "settings" },
 ]
 
 const router = createRouter({
