@@ -16,6 +16,8 @@ import {
     Image,
     NavBar,
     NumberKeyboard,
+    Picker,
+    Popup,
     Row,
     Search,
     Tab,
@@ -38,28 +40,30 @@ app.use(createPinia())
 
 // 注册组件
 app.use(Button)
-    .use(ActionBarButton)
-    .use(ActionBar)
-    .use(ActionBarIcon)
-    .use(Row)
-    .use(Col)
-    .use(Card)
-    .use(TabbarItem)
-    .use(Tabbar)
-    .use(Grid)
-    .use(GridItem)
-    .use(Icon)
-    .use(Cell)
-    .use(CellGroup)
-    .use(Image)
-    .use(Search)
-    .use(NavBar)
-    .use(Tab)
-    .use(Tabs)
-    .use(Field)
-    .use(Toast)
-    .use(Form)
-    .use(Uploader)
-    .use(NumberKeyboard)
+app.use(ActionBarButton)
+app.use(ActionBar)
+app.use(ActionBarIcon)
+app.use(Row)
+app.use(Col)
+app.use(Card)
+app.use(TabbarItem)
+app.use(Tabbar)
+app.use(Grid)
+app.use(GridItem)
+app.use(Icon)
+app.use(Cell)
+app.use(CellGroup)
+app.use(Image)
+app.use(Search)
+app.use(NavBar)
+app.use(Tab)
+app.use(Tabs)
+app.use(Field)
+app.use(Toast)
+app.use(Form)
+app.use(Picker)
+app.use(Popup)
+app.use(Uploader)
+app.use(NumberKeyboard)
 
 app.mount("#app")
