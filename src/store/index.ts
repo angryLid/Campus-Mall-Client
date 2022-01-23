@@ -11,4 +11,9 @@ export const useStore = defineStore("main", {
             following: 0,
         },
     }),
+    actions: {
+        setAuth(val: string) {
+            this.auth = val
+        },
+    },
 })

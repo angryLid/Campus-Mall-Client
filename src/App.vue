@@ -51,10 +51,17 @@ let active = computed(() => {
 let isHidden = computed(() => isNotFirstLayer(route.name))
 
 onMounted(() => {
-    const jwt = cookies.getItem("user")
-    if (jwt) {
-        store.state.jwt = jwt
-    }
+    const auth = cookies.getItem("user")
+
+    store.$patch({
+        auth: auth ? auth : "",
+    })
+
+    store.$subscribe((mutation, state) => {
+        if (mutation.storeId === "main") {
+            cookies.setItem("auth", state.auth)
+        }
+    })
 })
 function switchIcon(name: string, iconName: string) {
     return active.value === name ? iconName : iconName + "-o"

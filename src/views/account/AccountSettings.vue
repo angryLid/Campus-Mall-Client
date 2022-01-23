@@ -10,7 +10,7 @@ const router = useRouter()
 const store = useStore()
 
 function onClick() {
-    store.auth = ""
+    store.$patch({ auth: "" })
     router.replace({ name: "account" })
 }
 </script>

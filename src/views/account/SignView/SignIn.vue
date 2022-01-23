@@ -50,7 +50,7 @@ async function handleSubmit() {
     const resp = req.data
 
     if (resp.code === 200) {
-        store.auth = resp.data
+        store.$patch({ auth: resp.data })
         router.replace({ name: "homepage" })
     }
 }
