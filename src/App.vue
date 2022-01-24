@@ -44,14 +44,14 @@ type routeNameType = string | symbol | null | undefined
 const route = useRoute()
 const store = useStore()
 
-let active = computed(() => {
+const active = computed(() => {
     return route.name as string
 })
 
-let isHidden = computed(() => isNotFirstLayer(route.name))
+const isHidden = computed(() => isNotFirstLayer(route.name))
 
 onMounted(() => {
-    const auth = cookies.getItem("user")
+    const auth = cookies.getItem("auth")
 
     store.$patch({
         auth: auth ? auth : "",

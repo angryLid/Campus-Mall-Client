@@ -20,22 +20,24 @@
 </template>
 
 <script lang="ts" setup>
+import guestAvatar from "@/assets/avatar4guest.jpg"
 import { useStore } from "@/store"
 import { computed } from "vue"
 import { useRouter } from "vue-router"
-import guestAvatar from "@/assets/avatar4guest.jpg"
 const src = guestAvatar
 const router = useRouter()
 const store = useStore()
 
-let user = computed(() => {
+const user = computed(() => {
     return {
-        name: "store.state.user.name",
-        id: "store.state.user.telephone",
+        name: store.user.name,
+        id: store.user.telephone,
     }
 })
 function handleSign() {
-    router.replace({ name: "sign" })
+    if (!store.auth) {
+        router.push({ name: "sign" })
+    }
 }
 </script>
 

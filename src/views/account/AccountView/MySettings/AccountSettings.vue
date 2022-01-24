@@ -11,6 +11,14 @@ const store = useStore()
 
 function onClick() {
     store.$patch({ auth: "" })
+    store.$patch({
+        user: {
+            name: "游客, 您好",
+            telephone: "点击此处登录",
+            followed: 0,
+            following: 0,
+        },
+    })
     router.replace({ name: "account" })
 }
 </script>

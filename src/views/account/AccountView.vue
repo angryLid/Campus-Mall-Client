@@ -8,7 +8,6 @@
 import { useAxios } from "@/utils/ajax"
 import { onMounted } from "vue"
 import { useStore } from "../../store"
-import docCookies from "../../utils/cookies"
 //
 import MyFriends from "./AccountView/MyFriends.vue"
 import MyInfo from "./AccountView/MyInfo.vue"
@@ -17,14 +16,13 @@ import MyTrans from "./AccountView/MyTrans.vue"
 
 const store = useStore()
 const axios = useAxios()
-onMounted(() => {
-    const jwt = docCookies.getItem("auth")
-    if (jwt) {
-        axios
-            .get("/user/myaccount/", {
-                headers: { auth: jwt },
-            })
-            .then((res) => console.log)
+onMounted(async () => {
+    const req = await axios.get("/user/myaccount/")
+    const resp = req.data
+    if (resp.code === 200) {
+        store.$patch({
+            user: resp.data,
+        })
     }
 })
 </script>
