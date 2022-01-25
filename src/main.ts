@@ -8,6 +8,7 @@ import {
     Cell,
     CellGroup,
     Col,
+    DatetimePicker,
     Field,
     Form,
     Grid,
@@ -46,6 +47,8 @@ app.use(ActionBarIcon)
 app.use(Row)
 app.use(Col)
 app.use(Card)
+
+app.use(DatetimePicker)
 app.use(TabbarItem)
 app.use(Tabbar)
 app.use(Grid)

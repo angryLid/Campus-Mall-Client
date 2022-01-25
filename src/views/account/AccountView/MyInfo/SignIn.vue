@@ -19,7 +19,7 @@
                 plain
                 type="success"
                 class="block-btn"
-                @click="handleSubmit"
+                @click="onSubmit"
             >
                 登录
             </van-button>
@@ -28,24 +28,20 @@
 </template>
 
 <script lang="ts" setup>
+import { doLogin } from "@/api/login"
 import { useStore } from "@/store"
-import { useAxios } from "@/utils/ajax"
 import { reactive } from "vue"
 import { useRouter } from "vue-router"
 
 const router = useRouter()
 const store = useStore()
-const axios = useAxios()
 const model = reactive({
     telephone: "",
     password: "",
 })
 
-async function handleSubmit() {
-    const req = await axios.post("/user/signin/", {
-        telephone: model.telephone,
-        password: model.password,
-    })
+async function onSubmit() {
+    const req = await doLogin(model.telephone, model.password)
 
     const resp = req.data
 
