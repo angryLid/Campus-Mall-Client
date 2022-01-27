@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import { signUp } from "@/api/login"
+import { signUp } from "@/api/auth"
 import { useStore } from "@/store"
 import { Toast } from "vant"
 import { reactive } from "vue"

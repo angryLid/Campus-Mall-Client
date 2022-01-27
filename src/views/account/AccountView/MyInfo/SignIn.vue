@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-import { signIn } from "@/api/login"
+import { signIn } from "@/api/auth"
 import { useStore } from "@/store"
 import { reactive } from "vue"
 import { useRouter } from "vue-router"

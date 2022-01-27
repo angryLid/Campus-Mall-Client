@@ -17,7 +17,7 @@ import MyTrans from "./AccountView/MyTrans.vue"
 const store = useStore()
 const axios = useAxios()
 onMounted(async () => {
-    const req = await axios.get("/user/myaccount/")
+    const req = await axios.get("/client/account/myaccount/")
     const resp = req.data
     if (resp.code === 200) {
         store.$patch({

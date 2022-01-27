@@ -7,8 +7,10 @@
     />
 
     <van-form @submit="onSubmit">
-        <van-cell-group inset>
-            <van-cell title="您的身份" :value="role" />
+        <van-cell-group inset v-if="role.notice">
+            <van-cell title="学号" :value="role.studentId" />
+            <van-cell title="姓名" :value="role.name" />
+            <van-cell title="班级" :value="role.belongTo" />
         </van-cell-group>
 
         <van-cell-group inset v-if="hasRecord">
@@ -57,17 +59,21 @@
 </template>
 
 <script lang="ts" setup>
-import { getMine, postOne } from "@/api/qualification"
-import { useAxios } from "@/utils/ajax"
+import { postOne } from "@/api/qualification"
+import { getMerchantInfo, getStudentInfo } from "@/api/user"
 import type { UploaderFileListItem } from "vant"
 import type { Ref } from "vue"
 import { onMounted, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 
-const axios = useAxios()
 const router = useRouter()
 
-const role = ref("_")
+const role = reactive({
+    notice: false,
+    name: "",
+    belongTo: "",
+    studentId: "",
+})
 const images: Ref<UploaderFileListItem[]> = ref([])
 const picker = reactive({
     chosen: "",
@@ -82,52 +88,53 @@ const picker = reactive({
 const name = ref("开发测试有限责任公司")
 
 const putRecord = ref(false)
-
+const hasRecord = ref(false)
 const record = reactive({
     enterpriseName: "",
     enterpriseType: "",
     createdAt: new Date(),
     currentStatus: "",
 })
-const hasRecord = ref(false)
+
 onMounted(async () => {
-    const req = await getMine()
-    const resp = req.data
-
-    if (resp.code === 200 && resp.data) {
-        const map = new Map()
-        map.set("waiting", "等待审核")
-        map.set("approved", "审核通过")
-        map.set("rejected", "审核驳回")
-        record.createdAt = resp.data.createdAt
-        record.currentStatus = map.get(resp.data.currentStatus)
-        record.enterpriseName = resp.data.enterpriseName
-        record.enterpriseType = resp.data.enterpriseType
-        hasRecord.value = true
-    } else if (resp.code === 200 && resp.data === null) {
-        putRecord.value = true
-    }
-
     const iife = async () => {
-        const req = await axios.get("/user/myaccount/roletype/")
+        const req = await getMerchantInfo()
 
-        const resp = await req.data
+        const resp = req.data
 
-        if (resp.code !== 200) {
-            return
+        if (resp.code === 200 && resp.data !== null) {
+            const map = new Map()
+            map.set("waiting", "等待审核")
+            map.set("approved", "审核通过")
+            map.set("rejected", "审核驳回,请重新提交")
+            record.createdAt = resp.data.createdAt
+            record.currentStatus = map.get(resp.data.currentStatus)
+            record.enterpriseName = resp.data.enterpriseName
+            record.enterpriseType = resp.data.enterpriseType
+
+            hasRecord.value = true
+            if (resp.data.currentStatus === "rejected") {
+                putRecord.value = true
+            }
+        } else if (resp.code === 200 && resp.data === null) {
+            putRecord.value = true
         }
-
-        role.value = getRole(resp.data)
     }
     await iife()
+
+    const iife2 = async () => {
+        const req = await getStudentInfo()
+        const resp = req.data
+        if (resp.code === 200 && resp.data !== null) {
+            role.name = resp.data.name
+            role.studentId = resp.data.studentId
+            role.belongTo = resp.data.belongTo
+            role.notice = true
+        }
+    }
+    await iife2()
 })
 
-function getRole(key: string) {
-    const map = new Map()
-    map.set("unknown", "尚未认证")
-    map.set("student_verified", "已认证的学生")
-    return map.get(key)
-}
 function onClickLeft() {
     router.replace({ name: "account" })
 }
@@ -163,11 +170,6 @@ async function onSubmit() {
         "color:white;background:blue;font-size:13px",
         resp
     )
-}
-async function getRoleType() {
-    const req = await axios.get("/user/myaccount/roletype/")
-    const resp = await req.data
-    return resp
 }
 </script>
 

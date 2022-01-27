@@ -17,10 +17,10 @@
             </template>
         </van-tabbar-item>
         <van-tabbar-item name="message" replace to="/inbox">
-            <span>消息</span>
+            <span>购物车</span>
             <template #icon="props">
-                <van-icon v-if="props.active" name="comment" />
-                <van-icon v-else name="comment-o" />
+                <van-icon v-if="props.active" name="shopping-cart" />
+                <van-icon v-else name="shopping-cart-o" />
             </template>
         </van-tabbar-item>
         <van-tabbar-item name="account" replace to="/account">
