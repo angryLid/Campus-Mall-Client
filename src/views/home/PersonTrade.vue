@@ -20,18 +20,18 @@
 </template>
 
 <script lang="ts" setup>
+import { useAxios } from "@/utils/ajax"
 import type { Ref } from "vue"
 import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import type { Product } from "../../interface/data_transfer"
 import { useStore } from "../../store"
-import { useAxios } from "@/utils/ajax"
 const axios = useAxios()
 const router = useRouter()
 const store = useStore()
 const products: Ref<Product[]> = ref([])
 
-const url = "store.state.imageHostUrl"
+const url = store.imageHostURL
 
 onMounted(() => {
     axios.get("/product/").then((res) => {

@@ -63,7 +63,7 @@ defineProps<{
     product: Product
 }>()
 const store = useStore()
-const url = store.state.imageHostUrl
+const url = store.imageHostURL
 </script>
 
 <style scoped>
