@@ -2,16 +2,21 @@
     <van-tab title="注册">
         <van-cell-group inset>
             <div class="hint">支持大陆地区+86电话号码</div>
-            <van-field v-model="telephone" type="tel" label="手机号" required />
+            <van-field
+                v-model="user.telephone"
+                type="tel"
+                label="手机号"
+                required
+            />
             <div class="hint">长度8-16位, 允许数字或大小写字母</div>
             <van-field
-                v-model="password"
+                v-model="user.password"
                 type="password"
                 label="密码"
                 required
             />
             <van-field
-                v-model="comfirm"
+                v-model="user.comfirm"
                 type="password"
                 label="确认密码"
                 required
@@ -30,31 +35,32 @@
 </template>
 
 <script lang="ts" setup>
-import { useAxios } from "@/utils/ajax"
+import { signUp } from "@/api/login"
+import { useStore } from "@/store"
 import { Toast } from "vant"
-import { ref } from "vue"
+import { reactive } from "vue"
+import { useRouter } from "vue-router"
 
-const axios = useAxios()
-const telephone = ref("")
+const router = useRouter()
+const store = useStore()
 
-const password = ref("")
+const user = reactive({
+    telephone: "",
+    password: "",
+    comfirm: "",
+})
 
-const comfirm = ref("")
-
-function handleSubmit() {
-    const verified = verify(telephone.value, password.value, comfirm.value)
+async function handleSubmit() {
+    const verified = verify(user.telephone, user.password, user.comfirm)
     if (!verified) {
         Toast.fail("您输入的信息可能有误, 请检查")
     } else {
-        axios
-            .post("/user/signup/", {
-                telephone: telephone.value,
-                password: password.value,
-            })
-            .then((res) => {
-                console.log(res)
-                telephone.value = Number.parseInt(telephone.value) + 1 + ""
-            })
+        const req = await signUp(user.telephone, user.password)
+        const resp = req.data
+        if (resp.code === 200) {
+            store.$patch({ auth: resp.data })
+            router.replace({ name: "homepage" })
+        }
     }
 }
 

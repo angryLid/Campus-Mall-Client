@@ -2,51 +2,47 @@
     <router-view></router-view>
 
     <van-tabbar v-model="active" route :class="{ hidden: isHidden }">
-        <van-tabbar-item
-            :icon="switchIcon('homepage', 'wap-home')"
-            name="homepage"
-            replace
-            to="/"
-        >
-            首页
+        <van-tabbar-item name="homepage" replace to="/">
+            <span>首页</span>
+            <template #icon="props">
+                <van-icon v-if="props.active" name="wap-home" />
+                <van-icon v-else name="wap-home-o" />
+            </template>
         </van-tabbar-item>
-        <van-tabbar-item
-            :icon="switchIcon('post', 'add')"
-            name="post"
-            replace
-            to="/new"
-            >发布</van-tabbar-item
-        >
-        <van-tabbar-item
-            :icon="switchIcon('message', 'comment')"
-            name="message"
-            replace
-            to="/inbox"
-            >消息</van-tabbar-item
-        >
-        <van-tabbar-item
-            :icon="switchIcon('account', 'manager')"
-            name="account"
-            replace
-            to="/account"
-            >我的</van-tabbar-item
-        >
+        <van-tabbar-item name="post" replace to="/new">
+            <span>发布</span>
+            <template #icon="props">
+                <van-icon v-if="props.active" name="add" />
+                <van-icon v-else name="add-o" />
+            </template>
+        </van-tabbar-item>
+        <van-tabbar-item name="message" replace to="/inbox">
+            <span>消息</span>
+            <template #icon="props">
+                <van-icon v-if="props.active" name="comment" />
+                <van-icon v-else name="comment-o" />
+            </template>
+        </van-tabbar-item>
+        <van-tabbar-item name="account" replace to="/account">
+            <span>我的</span>
+            <template #icon="props">
+                <van-icon v-if="props.active" name="manager" />
+                <van-icon v-else name="manager-o" />
+            </template>
+        </van-tabbar-item>
     </van-tabbar>
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted } from "vue"
+import { computed, onMounted, ref } from "vue"
 import { useRoute } from "vue-router"
 import { useStore } from "./store"
 import cookies from "./utils/cookies"
-type routeNameType = string | symbol | null | undefined
 
 const route = useRoute()
 const store = useStore()
 
-const active = computed(() => {
-    return route.name as string
-})
+const active = ref("homepage")
 
 const isHidden = computed(() => isNotFirstLayer(route.name))
 
@@ -63,11 +59,8 @@ onMounted(() => {
         }
     })
 })
-function switchIcon(name: string, iconName: string) {
-    return active.value === name ? iconName : iconName + "-o"
-}
 
-function isNotFirstLayer(name: routeNameType) {
+function isNotFirstLayer(name: string | symbol | null | undefined) {
     const routeNames = ["homepage", "post", "message", "account"]
     const matched = routeNames.filter((item) => item === name)
     return matched.length < 1

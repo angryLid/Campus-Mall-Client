@@ -2,13 +2,13 @@
     <van-tab title="登录">
         <van-cell-group inset>
             <van-field
-                v-model="model.telephone"
+                v-model="user.telephone"
                 type="tel"
                 label="手机号"
                 required
             />
             <van-field
-                v-model="model.password"
+                v-model="user.password"
                 type="password"
                 label="密码"
                 required
@@ -28,20 +28,20 @@
 </template>
 
 <script lang="ts" setup>
-import { doLogin } from "@/api/login"
+import { signIn } from "@/api/login"
 import { useStore } from "@/store"
 import { reactive } from "vue"
 import { useRouter } from "vue-router"
 
 const router = useRouter()
 const store = useStore()
-const model = reactive({
+const user = reactive({
     telephone: "",
     password: "",
 })
 
 async function onSubmit() {
-    const req = await doLogin(model.telephone, model.password)
+    const req = await signIn(user.telephone, user.password)
 
     const resp = req.data
 
