@@ -29,12 +29,17 @@
     </div>
 
     <van-action-bar>
-        <van-action-bar-button type="warning" text="加入购物车" />
+        <van-action-bar-button
+            type="warning"
+            text="加入购物车"
+            @click="onAddCart"
+        />
         <van-action-bar-button type="danger" text="立即购买" />
     </van-action-bar>
 </template>
 
 <script lang="ts" setup>
+import { postOneRecord } from "@/api/cart"
 import { getOneProduct } from "@/api/product"
 import type { Ref } from "vue"
 import { computed, onMounted, ref } from "vue"
@@ -79,12 +84,14 @@ function onClickLeft() {
     })
 }
 
-function onClickButton() {
-    return null
-}
-
-function onClickIcon() {
-    return null
+async function onAddCart() {
+    const req = await postOneRecord(id.value as string)
+    const resp = req.data
+    console.log(
+        "%c [resp]:",
+        "color:white;background:blue;font-size:13px",
+        resp
+    )
 }
 </script>
 
