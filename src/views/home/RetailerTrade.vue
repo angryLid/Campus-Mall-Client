@@ -20,12 +20,11 @@
 </template>
 
 <script lang="ts" setup>
-import { getUserProducts } from "@/api/product"
-import type { Product } from "@/api/product"
-
+import { getRtrProducts } from "@/api/product"
 import type { Ref } from "vue"
 import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
+import type { Product } from "@/api/product"
 import { useStore } from "../../store"
 const router = useRouter()
 const store = useStore()
@@ -33,12 +32,13 @@ const products: Ref<Product[]> = ref([])
 
 const url = store.imageHostURL
 
-onMounted(() => {
-    getUserProducts().then((res) => {
-        products.value = res.data.data
-    })
+onMounted(async () => {
+    const req = await getRtrProducts()
+    const resp = req.data
+    if (resp.code === 200) {
+        products.value = resp.data
+    }
 })
-
 function onClick(id: number) {
     router.push({
         name: "detail",

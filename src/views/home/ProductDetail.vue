@@ -29,26 +29,19 @@
     </div>
 
     <van-action-bar>
-        <van-action-bar-icon icon="chat-o" text="客服" @click="onClickIcon" />
-        <van-action-bar-icon icon="cart-o" text="购物车" @click="onClickIcon" />
-        <van-action-bar-icon icon="shop-o" text="店铺" @click="onClickIcon" />
-        <van-action-bar-button
-            type="danger"
-            text="立即购买"
-            @click="onClickButton"
-        />
+        <van-action-bar-button type="warning" text="加入购物车" />
+        <van-action-bar-button type="danger" text="立即购买" />
     </van-action-bar>
 </template>
 
 <script lang="ts" setup>
-import { useAxios } from "@/utils/ajax"
+import { getOneProduct } from "@/api/product"
 import type { Ref } from "vue"
 import { computed, onMounted, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import guestAvatar from "../../assets/avatar4guest.jpg"
 import ImageSet from "../../components/ImageSet.vue"
 import { Product, User as Publisher } from "../../interface/data_transfer"
-const ajax = useAxios()
 const route = useRoute()
 const router = useRouter()
 const id = computed(() => route.params.id)
@@ -69,7 +62,7 @@ const formattedTime = computed(() => {
     return helper(new Date("1970-01-01"))
 })
 onMounted(() => {
-    ajax.get(`/product/${id.value}`).then((res) => {
+    getOneProduct(id.value as string).then((res) => {
         console.log(
             "%c [res]:",
             "color:white;background:blue;font-size:13px",

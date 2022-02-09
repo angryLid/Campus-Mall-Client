@@ -5,10 +5,10 @@
                 v-model="title"
                 rows="1"
                 autosize
-                :label="fieldTitle.label"
+                label="物品名称"
                 type="textarea"
                 maxlength="50"
-                :placeholder="fieldTitle.placeholder"
+                placeholder="包括品牌, 具体型号名等"
                 show-word-limit
             />
         </van-cell-group>
@@ -17,10 +17,10 @@
                 v-model="description"
                 rows="3"
                 autosize
-                :label="fieldDesc.label"
+                label="物品描述"
                 type="textarea"
                 maxlength="500"
-                :placeholder="fieldDesc.placeholder"
+                placeholder="请尽可能详细地描述新旧程度, 是否有功能受损等"
                 show-word-limit
             />
         </van-cell-group>
@@ -37,8 +37,8 @@
             <van-field
                 v-model="price"
                 name="价格"
-                :label="fieldPrice.label"
-                :placeholder="fieldPrice.placeholder"
+                label="价格"
+                placeholder="价格区间 0.00 - 9999.99"
                 :rules="[{ required: true, message: '请填写价格' }]"
                 @focusin="onPriceFocusIn"
                 @click="onPriceFocusIn"
@@ -55,6 +55,22 @@
             @input="onInput"
             @delete="onDelete"
         />
+        <van-field
+            v-model="result"
+            is-link
+            readonly
+            name="picker"
+            label="发布到"
+            placeholder="请选择"
+            @click="showPicker = true"
+        />
+        <van-popup v-model:show="showPicker" position="bottom">
+            <van-picker
+                :columns="columns"
+                @confirm="onConfirm"
+                @cancel="showPicker = false"
+            />
+        </van-popup>
         <div style="margin: 16px">
             <van-button round block type="primary" native-type="submit">
                 提交
@@ -64,12 +80,11 @@
 </template>
 
 <script lang="ts" setup>
-import { useAxios } from "@/utils/ajax"
+import { postOneProduct } from "@/api/product"
 import type { UploaderFileListItem } from "vant"
 import type { Ref } from "vue"
 import { ref, watchEffect } from "vue"
 
-const axios = useAxios()
 // TODO: 前端缩图
 // Form model part.
 const title = ref("红米K40 12+256")
@@ -79,19 +94,13 @@ const price: Ref<string> = ref("999.99")
 
 const show = ref(false)
 
-const fieldTitle = {
-    label: "物品名称",
-    placeholder: "包括品牌, 具体型号名等",
-}
+const result = ref("")
+const showPicker = ref(false)
+const columns = ["个人闲置", "我的店铺"]
 
-const fieldDesc = {
-    label: "物品描述",
-    placeholder: "请尽可能详细地描述新旧程度, 是否有功能受损等",
-}
-
-const fieldPrice = {
-    label: "价格",
-    placeholder: "价格区间 0.00 - 9999.99",
+const onConfirm = (value: string) => {
+    result.value = value
+    showPicker.value = false
 }
 function onInput(inputStr: string | number) {
     const isDot = inputStr === "."
@@ -137,7 +146,7 @@ function onDelete() {
 function onPriceFocusIn() {
     show.value = true
 }
-function onSubmit() {
+async function onSubmit() {
     const formData = new FormData()
 
     images.value.forEach((image, index) => {
@@ -153,16 +162,14 @@ function onSubmit() {
     formData.append("title", title.value)
     formData.append("description", description.value)
     formData.append("price", price.value)
-
-    axios
-        .post("/product/", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        })
-        .then((res) => {
-            console.log(res)
-        })
+    formData.append("pType", result.value)
+    const req = await postOneProduct(formData)
+    const resp = req.data
+    console.log(
+        "%c [resp]:",
+        "color:white;background:blue;font-size:13px",
+        resp
+    )
 }
 
 watchEffect(() => {

@@ -1,12 +1,35 @@
 <template>
-    <van-cell-group>
-        <van-cell title="单元格" value="内容" />
-        <van-cell title="单元格" value="内容" label="描述信息" />
-    </van-cell-group>
+    <van-action-bar class="bar">
+        <van-checkbox v-model="checked" shape="square" class="checkbox"
+            >全选</van-checkbox
+        >
+
+        <van-action-bar-button
+            type="danger"
+            text="立即购买"
+            @click="onClickButton"
+        />
+    </van-action-bar>
 </template>
 
-<script lang="ts">
-export default {}
+<script lang="ts" setup>
+/**
+ * 这个组件是购物车
+ *
+ */
+import { Toast } from "vant"
+import { ref } from "vue"
+const checked = ref(false)
+const onClickButton = () => Toast("点击按钮")
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.bar {
+    position: fixed;
+    bottom: 50px;
+}
+.checkbox {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+</style>

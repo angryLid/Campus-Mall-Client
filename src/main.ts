@@ -7,6 +7,7 @@ import {
     Card,
     Cell,
     CellGroup,
+    Checkbox,
     Col,
     DatetimePicker,
     Field,
@@ -47,7 +48,7 @@ app.use(ActionBarIcon)
 app.use(Row)
 app.use(Col)
 app.use(Card)
-
+app.use(Checkbox)
 app.use(DatetimePicker)
 app.use(TabbarItem)
 app.use(Tabbar)
