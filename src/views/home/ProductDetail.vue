@@ -47,6 +47,8 @@ import { useRoute, useRouter } from "vue-router"
 import guestAvatar from "../../assets/avatar4guest.jpg"
 import ImageSet from "../../components/ImageSet.vue"
 import { Product, User as Publisher } from "../../interface/data_transfer"
+import { Toast } from "vant"
+
 const route = useRoute()
 const router = useRouter()
 const id = computed(() => route.params.id)
@@ -87,6 +89,11 @@ function onClickLeft() {
 async function onAddCart() {
     const req = await postOneRecord(id.value as string)
     const resp = req.data
+    if (resp.code === 200) {
+        Toast.success("加入购物车成功")
+    } else {
+        Toast.fail("加入购物车失败")
+    }
     console.log(
         "%c [resp]:",
         "color:white;background:blue;font-size:13px",
