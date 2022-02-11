@@ -3,6 +3,7 @@ import {
     ActionBar,
     ActionBarButton,
     ActionBarIcon,
+    ActionSheet,
     Button,
     Card,
     Cell,
@@ -32,6 +33,7 @@ import {
 import { createApp } from "vue"
 import App from "./App.vue"
 import router from "./router"
+
 const app = createApp(App)
 
 // 注册路由
@@ -40,7 +42,7 @@ app.use(router)
 // 注册状态库
 app.use(createPinia())
 
-// 注册组件
+app.use(ActionSheet)
 app.use(Button)
 app.use(ActionBarButton)
 app.use(ActionBar)
