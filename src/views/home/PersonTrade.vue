@@ -2,7 +2,7 @@
     <van-card
         v-for="(p, i) in products"
         :key="i"
-        :price="p.price"
+        :price="p.price.toFixed(2)"
         :desc="p.description"
         :title="p.title"
         :thumb="url + p.image0"
