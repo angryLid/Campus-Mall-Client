@@ -1,50 +1,32 @@
 <template>
-    <div id="username-page">
-        <div class="username-page-container">
-            <h1 class="title">Digite seu nome</h1>
-            <form id="usernameForm" name="usernameForm">
-                <div class="form-group">
-                    <input
-                        v-model="username"
-                        type="text"
-                        id="name"
-                        placeholder="Nome"
-                        autocomplete="off"
-                        class="form-control"
-                    />
-                </div>
-                <div class="form-group">
-                    <button
-                        type="submit"
-                        class="accent username-submit"
-                        @click="onRegister"
-                    >
-                        Comece a conversar
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <div id="chat-page" class="">
         <div class="chat-container">
             <div class="chat-header">
-                <h2>ChatBox Tupi</h2>
+                <h2>{{ recipient }}</h2>
             </div>
-            <!-- <div class="connecting">Conectando ao chat...</div> -->
             <ul id="messageArea">
                 <li v-for="(m, i) in messages" :key="i">
-                    {{ m }}
+                    {{ m.senderId === username ? "我" : "对方" }}：{{
+                        m.content
+                    }}
                 </li>
             </ul>
-            <form id="messageForm" name="messageForm" nameForm="messageForm">
+            <form>
                 <div class="form-group">
                     <div class="input-group clearfix">
                         <input
                             v-model="message"
                             type="text"
                             id="message"
-                            placeholder="Digite uma mensagem..."
+                            placeholder="消息"
+                            autocomplete="off"
+                            class="form-control"
+                        />
+                        <input
+                            v-model="recipient"
+                            type="text"
+                            id="message"
+                            placeholder="接收者"
                             autocomplete="off"
                             class="form-control"
                         />
@@ -59,17 +41,33 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue"
-import type { Ref } from "vue"
+import { onMounted, ref, computed } from "vue"
+import type { Ref, ComputedRef } from "vue"
 import SockJS from "sockjs-client"
 import { Stomp } from "@stomp/stompjs"
 import type { CompatClient, IMessage } from "@stomp/stompjs"
+import { useStore } from "@/store"
+import { useRoute } from "vue-router"
+
+interface Message {
+    content: string
+    senderId: string
+    recipientId: string
+}
 
 let stompClient: CompatClient
-const username = ref("")
-const message = ref("")
+const store = useStore()
+const route = useRoute()
 
-const messages: Ref<IMessage[]> = ref([])
+const message = ref("")
+const username: ComputedRef<string> = computed(() => store.user.telephone)
+const recipient: ComputedRef<string> = computed(() => route.params.id as string)
+const messages: Ref<Message[]> = ref([])
+
+onMounted(() => {
+    onRegister()
+})
+
 function onRegister() {
     stompClient = Stomp.over(
         () => new SockJS("http://localhost:8080/websocket")
@@ -78,11 +76,16 @@ function onRegister() {
 }
 
 function onConnected() {
-    stompClient.subscribe("/topic/public", onMessageReceived)
-    stompClient.publish({
-        destination: "/app/chat.register",
-        body: JSON.stringify({ sender: username.value, type: "JOIN" }),
-    })
+    const subscription = store.user.telephone
+    console.log(
+        "%c [subscritption]:",
+        "color:white;background:blue;font-size:13px",
+        subscription
+    )
+    stompClient.subscribe(
+        `/user/${subscription}/queue/messages`,
+        onMessageReceived
+    )
 }
 function onError() {
     console.log("%c [error]:", "color:white;background:red;font-size:13px")
@@ -93,16 +96,21 @@ function onMessageReceived(payload: IMessage) {
 
 function send() {
     if (message.value && stompClient) {
-        stompClient.publish({
-            destination: "/app/chat.send",
-            body: JSON.stringify({
-                sender: username.value,
+        try {
+            const body = {
+                senderId: username.value,
+                recipientId: recipient.value,
                 content: message.value,
-                type: "CHAT",
-            }),
-        })
-
-        message.value = ""
+            }
+            stompClient.publish({
+                destination: "/app/chat",
+                body: JSON.stringify(body),
+            })
+            messages.value.push(body)
+            message.value = ""
+        } catch (e) {
+            console.log(e)
+        }
     }
 }
 </script>
@@ -118,10 +126,6 @@ function send() {
     display: block;
     content: "";
     clear: both;
-}
-
-.hidden {
-    display: none;
 }
 
 .form-control {
@@ -173,20 +177,8 @@ button {
     min-height: 38px;
 }
 
-button.default {
-    background-color: #e8e8e8;
-    color: #333;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
-}
-
 button.primary {
     background-color: #25be38;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
-    color: #fff;
-}
-
-button.accent {
-    background-color: #1778dd;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
     color: #fff;
 }

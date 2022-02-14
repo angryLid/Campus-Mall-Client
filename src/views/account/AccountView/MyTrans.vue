@@ -13,14 +13,27 @@
             <van-icon name="column" color="#ba830c" size="32"></van-icon>
             <span class="grid-item-text">我买到的</span>
         </van-grid-item>
-        <van-grid-item>
+        <van-grid-item @click="onMessage">
             <van-icon name="send-gift" color="#08946e" size="32"></van-icon>
-            <span class="grid-item-text">我可转卖的</span>
+            <span class="grid-item-text">我的消息</span>
         </van-grid-item>
     </van-grid>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useRouter } from "vue-router"
+
+const router = useRouter()
+
+function onMessage() {
+    router.push({
+        name: "chat",
+        params: {
+            id: "163",
+        },
+    })
+}
+</script>
 
 <style scoped>
 .grid-item-text {
