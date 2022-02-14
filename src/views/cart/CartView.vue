@@ -9,6 +9,13 @@
             <template #footer>
                 <van-button
                     size="mini"
+                    type="primary"
+                    @click="() => onQuery(cartItem)"
+                >
+                    客服
+                </van-button>
+                <van-button
+                    size="mini"
                     type="danger"
                     @click="() => removeCartItem(cartItem)"
                 >
@@ -94,8 +101,10 @@ import {
 import { onMounted, ref } from "vue"
 import { useStore } from "@/store"
 import { Toast } from "vant"
+import { useRouter } from "vue-router"
 
 const store = useStore()
+const router = useRouter()
 
 const show = ref(false)
 const cartItems: Ref<CartItem[]> = ref([])
@@ -160,6 +169,15 @@ async function decreaseQuantity(cartItem: CartItem) {
 
 async function removeCartItem(cartItem: CartItem) {
     await removeRecord(cartItem.cartId).then(async () => await getMyCart())
+}
+
+async function onQuery(cartItem: CartItem) {
+    router.push({
+        name: "chat",
+        params: {
+            id: cartItem.id,
+        },
+    })
 }
 </script>
 

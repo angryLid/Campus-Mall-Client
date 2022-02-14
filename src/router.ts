@@ -18,7 +18,7 @@ const routes = [
     { path: "/detail/:id", component: ProductDetail, name: "detail" },
     { path: "/kyc", component: KycView, name: "tr_kyc" },
     { path: "/settings", component: AccountSettings, name: "settings" },
-    { path: "/chat", component: ChatView, name: "chat" },
+    { path: "/chat/:id", component: ChatView, name: "chat" },
 ]
 
 const router = createRouter({
