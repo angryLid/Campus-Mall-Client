@@ -1,4 +1,5 @@
 <template>
+    <van-nav-bar :title="navBarTitle" />
     <div v-for="cartItem in cartItems" :key="cartItem.id">
         <van-card
             :num="cartItem.productSum"
@@ -102,12 +103,14 @@ import { onMounted, ref } from "vue"
 import { useStore } from "@/store"
 import { Toast } from "vant"
 import { useRouter } from "vue-router"
+import { getSeller } from "@/api/product"
 
 const store = useStore()
 const router = useRouter()
 
 const show = ref(false)
 const cartItems: Ref<CartItem[]> = ref([])
+const navBarTitle = computed(() => `购物车(${cartItems.value.length})`)
 const totalPrice = computed(() => {
     const total = cartItems.value.reduce((acc, cur) => {
         if (cur.checked) {
@@ -168,16 +171,29 @@ async function decreaseQuantity(cartItem: CartItem) {
 }
 
 async function removeCartItem(cartItem: CartItem) {
-    await removeRecord(cartItem.cartId).then(async () => await getMyCart())
+    const req = await removeRecord(cartItem.cartId)
+    const resp = req.data
+    if (resp.code === 200) {
+        cartItems.value = cartItems.value.filter(
+            (item) => item.cartId !== cartItem.cartId
+        )
+        Toast("移除成功")
+    } else {
+        Toast("移除失败")
+    }
 }
 
 async function onQuery(cartItem: CartItem) {
-    router.push({
-        name: "chat",
-        params: {
-            id: cartItem.id,
-        },
-    })
+    const req = await getSeller(cartItem.id)
+    const resp = req.data
+    if (resp.code === 200) {
+        router.push({
+            name: "chat",
+            params: {
+                id: resp.data,
+            },
+        })
+    }
 }
 </script>
 

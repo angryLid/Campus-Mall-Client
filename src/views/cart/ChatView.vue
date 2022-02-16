@@ -2,7 +2,7 @@
     <div class="">
         <div id="chat-page" class="chat-container">
             <div class="chat-header">
-                <div class="chat-header-btn">&lt; 返回</div>
+                <div class="chat-header-btn" @click="goBack">&lt; 返回</div>
                 <div class="chat-header-title">{{ opponentName }}</div>
             </div>
             <ul id="messageArea">
@@ -10,8 +10,8 @@
                     v-for="(m, i) in messages"
                     :key="i"
                     :class="{
-                        self: m.senderId === username,
-                        opponent: m.senderId !== username,
+                        self: m.senderTel === myself,
+                        opponent: m.senderTel !== myself,
                     }"
                 >
                     {{ m.content }}
@@ -26,7 +26,7 @@
                     autocomplete="off"
                     class="form-control"
                 />
-                <button type="submit" class="primary" @click="send">
+                <button type="submit" class="primary" @click.prevent="send">
                     发送
                 </button>
             </form>
@@ -43,11 +43,13 @@ import type { CompatClient, IMessage } from "@stomp/stompjs"
 import { useStore } from "@/store"
 import { useRoute } from "vue-router"
 import { getNameByTel } from "@/api/user"
+import router from "@/router"
+import { getChatHistory } from "@/api/cart"
 
-interface Message {
+interface ChatMessage {
     content: string
-    senderId: string
-    recipientId: string
+    senderTel: string
+    recipientTel: string
 }
 
 let stompClient: CompatClient
@@ -55,13 +57,13 @@ const store = useStore()
 const route = useRoute()
 
 const message = ref("")
-const username: Ref<string> = computed(() => store.user.telephone)
+const myself: Ref<string> = computed(() => store.user.telephone)
 const opponent = computed(() =>
     typeof route.params.id === "string" ? route.params.id : ""
 )
 
 const opponentName: Ref<string> = ref("")
-const messages: Ref<Message[]> = ref([])
+const messages: Ref<ChatMessage[]> = ref([])
 
 onMounted(() => {
     onRegister()
@@ -84,25 +86,41 @@ function onRegister() {
 
 function onConnected() {
     const subscription = store.user.telephone
-
+    const body: ChatMessage = {
+        senderTel: store.user.telephone,
+        recipientTel: opponent.value,
+        content: "",
+    }
     stompClient.subscribe(
         `/user/${subscription}/queue/messages`,
         onMessageReceived
     )
+    stompClient.publish({
+        destination: `/app/history`,
+        body: JSON.stringify(body),
+    })
 }
 function onError() {
     console.log("%c [error]:", "color:white;background:red;font-size:13px")
 }
 function onMessageReceived(payload: IMessage) {
+    console.log(
+        "%c [payload]:",
+        "color:white;background:blue;font-size:13px",
+        payload.body
+    )
+    if (payload instanceof Array) {
+        return
+    }
     messages.value.push(JSON.parse(payload.body))
 }
 
 function send() {
     if (message.value && stompClient) {
         try {
-            const body = {
-                senderId: username.value,
-                recipientId: opponent.value,
+            const body: ChatMessage = {
+                senderTel: myself.value,
+                recipientTel: opponent.value,
                 content: message.value,
             }
             stompClient.publish({
@@ -115,6 +133,12 @@ function send() {
             console.log(e)
         }
     }
+}
+
+function goBack() {
+    router.replace({
+        name: "cart",
+    })
 }
 </script>
 

@@ -12,7 +12,7 @@ import PostView from "./views/post/PostView.vue"
 const routes = [
     { path: "/", component: HomeView, name: "homepage" },
     { path: "/new", component: PostView, name: "post" },
-    { path: "/inbox", component: InboxView, name: "message" },
+    { path: "/inbox", component: InboxView, name: "cart" },
     { path: "/account", component: AccountView, name: "account" },
     { path: "/sign", component: SignView, name: "sign" },
     { path: "/detail/:id", component: ProductDetail, name: "detail" },

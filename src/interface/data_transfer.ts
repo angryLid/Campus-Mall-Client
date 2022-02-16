@@ -14,7 +14,7 @@ export interface Product {
 
 export interface User {
     id: string
-    nikename: string
+    nickname: string
 }
 
 export interface BaseAccountInfo {

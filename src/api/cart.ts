@@ -38,3 +38,7 @@ export function doPayment(items: number[]) {
 export function removeRecord(productId: string | number) {
     return useAxios().delete(`${url}/${productId}`)
 }
+
+export function getChatHistory() {
+    return useAxios().get("/app/history/")
+}

@@ -1,4 +1,6 @@
 <template>
+    <van-nav-bar title="商品发布" />
+
     <van-form @submit="onSubmit" class="form">
         <van-cell-group>
             <van-field
@@ -179,6 +181,6 @@ watchEffect(() => {
 
 <style scoped>
 .form {
-    padding-top: 40px;
+    margin-top: 10px;
 }
 </style>

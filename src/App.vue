@@ -70,7 +70,7 @@ onMounted(async () => {
 })
 
 function isNotFirstLayer(name: string | symbol | null | undefined) {
-    const routeNames = ["homepage", "post", "message", "account"]
+    const routeNames = ["homepage", "post", "cart", "account"]
     const matched = routeNames.filter((item) => item === name)
     return matched.length < 1
 }

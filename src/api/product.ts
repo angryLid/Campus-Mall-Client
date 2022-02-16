@@ -35,3 +35,7 @@ export function getUserProducts() {
 export function getOneProduct(id: string) {
     return useAxios().get(`${url}${id}`)
 }
+
+export function getSeller(id: string | number) {
+    return useAxios().get(`${url}seller/${id}`)
+}

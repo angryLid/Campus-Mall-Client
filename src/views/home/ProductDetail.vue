@@ -11,7 +11,9 @@
                 <van-image round :src="guestAvatar"> </van-image>
             </van-col>
             <van-col span="12" offset="1">
-                <div class="username">{{ publisher?.nikename }}</div>
+                <div class="username" v-if="publisher">
+                    {{ publisher.nickname }}
+                </div>
                 <div class="datetime">{{ formattedTime }} 发布</div>
             </van-col>
         </van-row>
