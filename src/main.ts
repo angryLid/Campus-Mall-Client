@@ -17,6 +17,7 @@ import {
     GridItem,
     Icon,
     Image,
+    List,
     NavBar,
     NumberKeyboard,
     Picker,
@@ -41,7 +42,7 @@ app.use(router)
 
 // 注册状态库
 app.use(createPinia())
-
+app.use(List)
 app.use(ActionSheet)
 app.use(Button)
 app.use(ActionBarButton)
