@@ -1,7 +1,7 @@
 <template>
     <div class="grid-title">我的交易</div>
     <van-grid>
-        <van-grid-item>
+        <van-grid-item @click="() => push('pub')">
             <van-icon name="bag" color="#ba391a" size="32"></van-icon>
             <span class="grid-item-text">我发布的</span>
         </van-grid-item>
@@ -25,6 +25,11 @@ import { useRouter } from "vue-router"
 
 const router = useRouter()
 
+function push(name: string) {
+    router.push({
+        name,
+    })
+}
 function onMessage() {
     router.push({
         name: "chat",

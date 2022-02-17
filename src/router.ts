@@ -5,6 +5,7 @@ import AccountView from "./views/account/AccountView.vue"
 import SignView from "./views/account/AccountView/MyInfo/SignView.vue"
 import AccountSettings from "./views/account/AccountView/MySettings/AccountSettings.vue"
 import KycView from "./views/account/AccountView/MySettings/KycView.vue"
+import MyPublish from "./views/account/AccountView/MyTransactions/MyPublish.vue"
 import InboxView from "./views/cart/CartView.vue"
 import HomeView from "./views/home/HomeView.vue"
 import ProductDetail from "./views/home/ProductDetail.vue"
@@ -19,6 +20,7 @@ const routes = [
     { path: "/kyc", component: KycView, name: "tr_kyc" },
     { path: "/settings", component: AccountSettings, name: "settings" },
     { path: "/chat/:id", component: ChatView, name: "chat" },
+    { path: "/publish", component: MyPublish, name: "pub" },
 ]
 
 const router = createRouter({
