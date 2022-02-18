@@ -46,3 +46,11 @@ export function getOneProduct(id: string) {
 export function getSeller(id: string | number) {
     return useAxios().get(`${url}seller/${id}`)
 }
+
+export function getMyPublished() {
+    return useAxios().get(url + "published/")
+}
+
+export function cancel(id: number) {
+    return useAxios().delete(url + id + "/")
+}

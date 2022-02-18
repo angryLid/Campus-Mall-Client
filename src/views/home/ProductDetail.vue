@@ -4,7 +4,11 @@
     <div class="container" v-if="productDetail">
         <van-row class="panel">
             <van-col span="4">
-                <van-image round :src="guestAvatar"> </van-image>
+                <van-image
+                    round
+                    :src="avatarTemplate(productDetail.sellerName.slice(0, 1))"
+                >
+                </van-image>
             </van-col>
             <van-col span="12" offset="1">
                 <div class="username">
@@ -44,11 +48,10 @@ import { getOneProduct, ProductDetail } from "@/api/product"
 import type { Ref } from "vue"
 import { computed, onMounted, ref } from "vue"
 import { useRoute } from "vue-router"
-import guestAvatar from "../../assets/avatar4guest.jpg"
 import ImageSet from "../../components/ImageSet.vue"
 import { Toast } from "vant"
 import MyNavbar from "@/components/MyNavbar.vue"
-
+import { avatarTemplate } from "@/utils/avatar"
 const route = useRoute()
 
 const id = computed(() => {

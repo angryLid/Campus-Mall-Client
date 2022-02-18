@@ -80,9 +80,9 @@
             </div>
 
             <div class="content-btn">
-                <van-button type="success" block @click="onPay"
-                    >付款</van-button
-                >
+                <van-button type="success" block @click="onPay">
+                    付款
+                </van-button>
             </div>
         </div>
     </van-action-sheet>

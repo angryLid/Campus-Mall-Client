@@ -2,7 +2,7 @@
     <div class="avatar-group" @click="handleSign">
         <div class="avatar-group-image">
             <van-image
-                :src="src"
+                :src="avatarTemplate(user.name.slice(0, 1))"
                 height="60"
                 width="60"
                 round
@@ -20,11 +20,11 @@
 </template>
 
 <script lang="ts" setup>
-import guestAvatar from "@/assets/avatar4guest.jpg"
 import { useStore } from "@/store"
 import { computed } from "vue"
 import { useRouter } from "vue-router"
-const src = guestAvatar
+import { avatarTemplate } from "@/utils/avatar"
+
 const router = useRouter()
 const store = useStore()
 
