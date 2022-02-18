@@ -56,11 +56,11 @@
 </template>
 
 <script lang="ts" setup>
-import type { Product } from "../interface/data_transfer"
+import { ProductDetail } from "@/api/product"
 import { useStore } from "../store"
 
 defineProps<{
-    product: Product
+    product: ProductDetail
 }>()
 const store = useStore()
 const url = store.imageHostURL

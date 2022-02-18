@@ -1,6 +1,7 @@
 import { useAxios } from "@/utils/ajax"
+import { apiVersion } from "./version"
 
-const url = "/client/account"
+const url = apiVersion + "/account"
 export function getStudentInfo() {
     return useAxios().get("/client/account/student_info/")
 }
@@ -11,4 +12,8 @@ export function getMerchantInfo() {
 
 export function getNameByTel(telephone: string) {
     return useAxios().get(`${url}/username/${telephone}`)
+}
+
+export function getUserRole() {
+    return useAxios().get(url + "/myaccount/roletype")
 }

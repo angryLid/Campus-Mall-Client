@@ -1,4 +1,7 @@
 import { useAxios } from "@/utils/ajax"
+export interface Qualification {
+    id: number
+}
 
 export function getMine() {
     const axios = useAxios()

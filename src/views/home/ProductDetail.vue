@@ -1,33 +1,31 @@
 <template>
-    <van-nav-bar
-        title="商品详情"
-        left-text="返回"
-        left-arrow
-        @click-left="onClickLeft"
-    />
-    <div class="container">
+    <my-navbar title="商品详情" route-name="homepage" />
+
+    <div class="container" v-if="productDetail">
         <van-row class="panel">
             <van-col span="4">
                 <van-image round :src="guestAvatar"> </van-image>
             </van-col>
             <van-col span="12" offset="1">
-                <div class="username" v-if="publisher">
-                    {{ publisher.nickname }}
+                <div class="username">
+                    {{ productDetail.sellerName }}
                 </div>
-                <div class="datetime">{{ formattedTime }} 发布</div>
+                <div class="datetime">
+                    {{ formattedTime(productDetail.publishTime) }} 发布
+                </div>
             </van-col>
         </van-row>
 
-        <van-row class="price"> ￥{{ product?.price }} </van-row>
+        <van-row class="price"> ￥{{ productDetail.price }} </van-row>
 
         <van-row class="title">
-            {{ product?.title }}
+            {{ productDetail.title }}
         </van-row>
         <van-row class="desc">
-            {{ product?.description }}
+            {{ productDetail.description }}
         </van-row>
 
-        <image-set v-if="product" :product="product"> </image-set>
+        <image-set :product="productDetail"> </image-set>
     </div>
 
     <van-action-bar>
@@ -42,65 +40,50 @@
 
 <script lang="ts" setup>
 import { postOneRecord } from "@/api/cart"
-import { getOneProduct } from "@/api/product"
+import { getOneProduct, ProductDetail } from "@/api/product"
 import type { Ref } from "vue"
 import { computed, onMounted, ref } from "vue"
-import { useRoute, useRouter } from "vue-router"
+import { useRoute } from "vue-router"
 import guestAvatar from "../../assets/avatar4guest.jpg"
 import ImageSet from "../../components/ImageSet.vue"
-import { Product, User as Publisher } from "../../interface/data_transfer"
 import { Toast } from "vant"
+import MyNavbar from "@/components/MyNavbar.vue"
 
 const route = useRoute()
-const router = useRouter()
-const id = computed(() => route.params.id)
 
-const product: Ref<Product | undefined> = ref()
-const publisher: Ref<Publisher | undefined> = ref()
-
-const formattedTime = computed(() => {
-    const helper = (d: Date) => {
-        return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`
+const id = computed(() => {
+    if (typeof route.params.id === "string") {
+        return route.params.id
     }
-
-    if (product.value) {
-        const d = new Date(product.value?.modifiedAt)
-        return helper(d)
-    }
-
-    return helper(new Date("1970-01-01"))
+    return ""
 })
+
+const productDetail: Ref<ProductDetail | undefined> = ref()
+
 onMounted(() => {
-    getOneProduct(id.value as string).then((res) => {
+    getOneProduct(id.value).then((res) => {
         console.log(
             "%c [res]:",
             "color:white;background:blue;font-size:13px",
             res
         )
-        product.value = res.data.data.product
-        publisher.value = res.data.data.publisher
+        productDetail.value = res.data.data
     })
 })
 
-function onClickLeft() {
-    router.replace({
-        name: "homepage",
-    })
+function formattedTime(time: string) {
+    const d = new Date(time)
+    return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`
 }
 
 async function onAddCart() {
-    const req = await postOneRecord(id.value as string)
+    const req = await postOneRecord(id.value)
     const resp = req.data
     if (resp.code === 200) {
         Toast.success("加入购物车成功")
     } else {
         Toast.fail("加入购物车失败")
     }
-    console.log(
-        "%c [resp]:",
-        "color:white;background:blue;font-size:13px",
-        resp
-    )
 }
 </script>
 

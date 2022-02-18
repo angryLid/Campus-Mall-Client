@@ -2,20 +2,27 @@ import { useAxios } from "@/utils/ajax"
 
 const url = "/client/product/"
 
-export interface Product {
-    id: number
-    title: string
-    description: string
-    price: number
+interface Images {
     image0: string | null
     image1: string | null
     image2: string | null
     image3: string | null
     image4: string | null
     image5: string | null
-    modifiedAt: string
 }
 
+export interface Product extends Images {
+    id: number
+    title: string
+    description: string
+    price: number
+    modifiedAt: string
+}
+export interface ProductDetail extends Product {
+    sellerName: string
+    sellerTel: string
+    publishTime: string
+}
 export function postOneProduct(formData: FormData) {
     return useAxios().post(url, formData, {
         headers: {
@@ -33,7 +40,7 @@ export function getUserProducts() {
 }
 
 export function getOneProduct(id: string) {
-    return useAxios().get(`${url}${id}`)
+    return useAxios().get(url + id)
 }
 
 export function getSeller(id: string | number) {

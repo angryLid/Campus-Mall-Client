@@ -74,7 +74,12 @@
             />
         </van-popup>
         <div style="margin: 16px">
-            <van-button round block type="primary" native-type="submit">
+            <van-button
+                block
+                type="primary"
+                native-type="submit"
+                :disabled="btnDisabled"
+            >
                 提交
             </van-button>
         </div>
@@ -83,24 +88,28 @@
 
 <script lang="ts" setup>
 import { postOneProduct } from "@/api/product"
-import type { UploaderFileListItem } from "vant"
-import type { Ref } from "vue"
-import { ref, watchEffect } from "vue"
+import { getUserRole } from "@/api/user"
+import { Toast, UploaderFileListItem } from "vant"
+import { onMounted, Ref } from "vue"
+import { ref } from "vue"
 
-// TODO: 前端缩图
-// Form model part.
 const title = ref("红米K40 12+256")
 const description = ref("9新箱说全,未拆修")
 const images: Ref<UploaderFileListItem[]> = ref([])
 const price: Ref<string> = ref("999.99")
-
 const show = ref(false)
-
+const btnDisabled = ref(true)
 const result = ref("")
 const showPicker = ref(false)
-const columns = ["个人闲置", "我的店铺"]
+const columns: Ref<string[]> = ref([])
 
-const onConfirm = (value: string) => {
+const typeMapping = new Map()
+
+onMounted(async () => {
+    await initUserRole()
+})
+
+function onConfirm(value: string) {
     result.value = value
     showPicker.value = false
 }
@@ -164,23 +173,40 @@ async function onSubmit() {
     formData.append("title", title.value)
     formData.append("description", description.value)
     formData.append("price", price.value)
-    formData.append("pType", result.value)
+    formData.append("pType", typeMapping.get(result.value))
     const req = await postOneProduct(formData)
     const resp = req.data
-    console.log(
-        "%c [resp]:",
-        "color:white;background:blue;font-size:13px",
-        resp
-    )
+    if (resp.code === 200) {
+        Toast("发布成功")
+    } else {
+        Toast("发布失败")
+    }
 }
 
-watchEffect(() => {
-    console.log(images.value)
-})
+async function initUserRole() {
+    const req = await getUserRole()
+    const resp = req.data
+    if (resp.code === 200) {
+        const student = resp.data.student
+        const qualification = resp.data.qualification
+
+        if (student || qualification) {
+            btnDisabled.value = false
+        } else {
+            return
+        }
+        if (student) {
+            result.value = `个人闲置(${student.name})`
+            columns.value.push(`个人闲置(${student.name})`)
+            typeMapping.set(`个人闲置(${student.name})`, "personal")
+        }
+        if (qualification) {
+            result.value = qualification.enterpriseName
+            columns.value.push(qualification.enterpriseName)
+            typeMapping.set(qualification.enterpriseName, "enterprise")
+        }
+    }
+}
 </script>
 
-<style scoped>
-.form {
-    margin-top: 10px;
-}
-</style>
+<style scoped></style>

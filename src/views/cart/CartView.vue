@@ -104,6 +104,7 @@ import { useStore } from "@/store"
 import { Toast } from "vant"
 import { useRouter } from "vue-router"
 import { getSeller } from "@/api/product"
+import { getUserRole } from "@/api/user"
 
 const store = useStore()
 const router = useRouter()
@@ -131,6 +132,7 @@ async function getMyCart() {
         cartItems.value = resp.data
     }
 }
+
 async function onPay() {
     const preTrans: number[] = []
     cartItems.value.forEach((item) => {
