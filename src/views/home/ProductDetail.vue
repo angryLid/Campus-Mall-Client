@@ -33,12 +33,27 @@
     </div>
 
     <van-action-bar>
+        <van-action-bar-icon icon="chat-o" text="客服" @click="onClickIcon" />
+        <van-action-bar-icon icon="cart-o" text="购物车" @click="onClickIcon" />
+
+        <van-action-bar-icon
+            v-if="!productDetail?.favorite"
+            icon="star-o"
+            text="收藏"
+            @click="addFavorite"
+        />
+        <van-action-bar-icon
+            v-else
+            icon="star"
+            text="已收藏"
+            color="#ff5000"
+            @click="removeFavorite"
+        />
         <van-action-bar-button
             type="warning"
             text="加入购物车"
             @click="onAddCart"
         />
-        <van-action-bar-button type="danger" text="立即购买" />
     </van-action-bar>
 </template>
 
@@ -87,6 +102,18 @@ async function onAddCart() {
     } else {
         Toast.fail("加入购物车失败")
     }
+}
+
+function onClickIcon() {
+    return
+}
+
+function addFavorite() {
+    return
+}
+
+function removeFavorite() {
+    return
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
     <van-grid>
-        <van-grid-item>
+        <van-grid-item @click="() => navigate('favorite')">
             <span>{{ helper(favorite) }}</span>
             <span>收藏</span>
         </van-grid-item>
@@ -21,8 +21,10 @@
 
 <script lang="ts" setup>
 import { computed, ref } from "vue"
-import { useStore } from "../../../store"
+import { useRouter } from "vue-router"
+import { useStore } from "@/store"
 
+const router = useRouter()
 const store = useStore()
 const favorite = ref(-1)
 const history = ref(-1)
@@ -43,6 +45,12 @@ const followed = computed(() => {
 
 function helper(val: number) {
     return val < 0 ? "-" : val
+}
+
+function navigate(name: string) {
+    router.push({
+        name,
+    })
 }
 </script>
 

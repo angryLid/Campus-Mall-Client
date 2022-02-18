@@ -22,6 +22,7 @@ export interface ProductDetail extends Product {
     sellerName: string
     sellerTel: string
     publishTime: string
+    favorite: boolean
 }
 export function postOneProduct(formData: FormData) {
     return useAxios().post(url, formData, {

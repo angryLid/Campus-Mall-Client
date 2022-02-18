@@ -3,6 +3,7 @@ import type { RouteRecordRaw } from "vue-router"
 import { createRouter, createWebHashHistory } from "vue-router"
 import { useStore } from "./store"
 import AccountView from "./views/account/AccountView.vue"
+import MyFavorite from "./views/account/AccountView/MyFriends/MyFavorite.vue"
 import SignView from "./views/account/AccountView/MyInfo/SignView.vue"
 import AccountSettings from "./views/account/AccountView/MySettings/AccountSettings.vue"
 import KycView from "./views/account/AccountView/MySettings/KycView.vue"
@@ -12,7 +13,6 @@ import InboxView from "./views/cart/CartView.vue"
 import HomeView from "./views/home/HomeView.vue"
 import ProductDetail from "./views/home/ProductDetail.vue"
 import PostView from "./views/post/PostView.vue"
-
 const routes: RouteRecordRaw[] = [
     { path: "/", component: HomeView, name: "homepage" },
     { path: "/new", component: PostView, name: "post" },
@@ -25,6 +25,7 @@ const routes: RouteRecordRaw[] = [
     { path: "/chat/:id", component: ChatView, name: "chat" },
     { path: "/chat", component: MessageList, name: "msgbox" },
     { path: "/publish", component: MyPublish, name: "pub" },
+    { path: "/favorite", component: MyFavorite, name: "favorite" },
 ]
 
 const router = createRouter({
