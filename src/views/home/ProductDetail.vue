@@ -66,7 +66,7 @@ import { useRoute } from "vue-router"
 import ImageSet from "../../components/ImageSet.vue"
 import { Toast } from "vant"
 import MyNavbar from "@/components/MyNavbar.vue"
-import { avatarTemplate } from "@/utils/avatar"
+import { avatarTemplate } from "@/utils/image"
 const route = useRoute()
 
 const id = computed(() => {

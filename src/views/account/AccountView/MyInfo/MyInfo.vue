@@ -23,7 +23,7 @@
 import { useStore } from "@/store"
 import { computed } from "vue"
 import { useRouter } from "vue-router"
-import { avatarTemplate } from "@/utils/avatar"
+import { avatarTemplate } from "@/utils/image"
 
 const router = useRouter()
 const store = useStore()

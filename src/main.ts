@@ -24,6 +24,8 @@ import {
     Popup,
     Row,
     Search,
+    Swipe,
+    SwipeItem,
     Tab,
     Tabbar,
     TabbarItem,
@@ -42,6 +44,8 @@ app.use(router)
 
 // 注册状态库
 app.use(createPinia())
+app.use(Swipe)
+app.use(SwipeItem)
 app.use(List)
 app.use(ActionSheet)
 app.use(Button)
