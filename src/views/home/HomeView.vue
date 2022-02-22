@@ -7,31 +7,32 @@
         </van-swipe-item>
     </van-swipe>
 
-    <!-- <van-tabs v-model:active="active">
+    <van-tabs v-model:active="active">
         <van-tab title="个人闲置">
-            <person-trade />
+            <product-list :fn="getUserProducts" />
         </van-tab>
         <van-tab title="校园商家">
-            <retailer-trade />
+            <product-list :fn="getRtrProducts" />
         </van-tab>
-    </van-tabs> -->
+    </van-tabs>
 </template>
 
 <script lang="ts" setup>
-import { getSwipes } from "@/api/swipe"
+import { getUserProducts, getRtrProducts } from "@/api/product"
+import { getSwipes, SwipeModel } from "@/api/swipe"
 import { computed, onMounted, ref } from "vue"
-import PersonTrade from "./PersonTrade.vue"
-import RetailerTrade from "./RetailerTrade.vue"
+import ProductList from "./ProductList.vue"
 import { imageTemplate } from "@/utils/image"
 const active = ref(0)
-const swipeList = ref<any[]>([])
+const swipeList = ref<SwipeModel[]>([])
 const toBeSearched = computed(() => "")
 
 onMounted(async () => {
-    // const req = await getSwipes()
-    // const { data } = req
-    // console.log(data)
-    // swipeList.value = data.data
+    const req = await getSwipes()
+    const { data } = req
+    if (data.code === 200) {
+        swipeList.value = data.data
+    }
 })
 </script>
 
