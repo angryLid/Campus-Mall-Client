@@ -6,14 +6,15 @@
             <van-image :src="imageTemplate(o.image)" />
         </van-swipe-item>
     </van-swipe>
-    <van-tabs v-model:active="active">
+
+    <!-- <van-tabs v-model:active="active">
         <van-tab title="个人闲置">
             <person-trade />
         </van-tab>
         <van-tab title="校园商家">
             <retailer-trade />
         </van-tab>
-    </van-tabs>
+    </van-tabs> -->
 </template>
 
 <script lang="ts" setup>
@@ -27,10 +28,10 @@ const swipeList = ref<any[]>([])
 const toBeSearched = computed(() => "")
 
 onMounted(async () => {
-    const req = await getSwipes()
-    const { data } = req
-    swipeList.value = data.data
-    console.log(data)
+    // const req = await getSwipes()
+    // const { data } = req
+    // console.log(data)
+    // swipeList.value = data.data
 })
 </script>
 

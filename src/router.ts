@@ -13,11 +13,20 @@ import InboxView from "./views/cart/CartView.vue"
 import HomeView from "./views/home/HomeView.vue"
 import ProductDetail from "./views/home/ProductDetail.vue"
 import PostView from "./views/post/PostView.vue"
+import WithTabbar from "./views/withTabbar.vue"
 const routes: RouteRecordRaw[] = [
-    { path: "/", component: HomeView, name: "homepage" },
-    { path: "/new", component: PostView, name: "post" },
-    { path: "/inbox", component: InboxView, name: "cart" },
-    { path: "/account", component: AccountView, name: "account" },
+    {
+        path: "/",
+        component: WithTabbar,
+        name: "app",
+        children: [
+            { path: "mall", component: HomeView, name: "mall" },
+            { path: "post", component: PostView, name: "post" },
+            { path: "cart", component: InboxView, name: "cart" },
+            { path: "account", component: AccountView, name: "account" },
+        ],
+    },
+
     { path: "/sign", component: SignView, name: "sign" },
     { path: "/detail/:id", component: ProductDetail, name: "detail" },
     { path: "/kyc", component: KycView, name: "tr_kyc" },
@@ -34,6 +43,10 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from) => {
+    if (to.name === "app") {
+        return { name: "mall" }
+    }
+
     const store = useStore()
     if (to.name?.toString().startsWith("tr")) {
         if (store.user.telephone.length < 1) {
