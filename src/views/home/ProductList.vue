@@ -1,4 +1,5 @@
 <template>
+    <router-view></router-view>
     <van-card
         v-for="(p, i) in products"
         :key="i"

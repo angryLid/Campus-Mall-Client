@@ -1,5 +1,5 @@
 <template>
-    <my-navbar title="商品详情" route-name="homepage" />
+    <my-navbar title="商品详情" />
 
     <div class="container" v-if="productDetail">
         <van-row class="panel">
@@ -18,6 +18,24 @@
                     {{ formattedTime(productDetail.publishTime) }} 发布
                 </div>
             </van-col>
+            <van-col span="5">
+                <van-button
+                    type="primary"
+                    size="mini"
+                    @click="() => onFollow(productDetail!.sellerId)"
+                    v-if="!isFollowingRef"
+                >
+                    关注
+                </van-button>
+                <van-button
+                    type="danger"
+                    size="mini"
+                    @click="() => onUnfollow(productDetail!.sellerId)"
+                    v-if="isFollowingRef"
+                >
+                    取消关注
+                </van-button>
+            </van-col>
         </van-row>
 
         <van-row class="price"> ￥{{ productDetail.price }} </van-row>
@@ -33,21 +51,21 @@
     </div>
 
     <van-action-bar>
-        <van-action-bar-icon icon="chat-o" text="客服" @click="onClickIcon" />
-        <van-action-bar-icon icon="cart-o" text="购物车" @click="onClickIcon" />
+        <van-action-bar-icon icon="chat-o" text="客服" @click="onFollow" />
+        <van-action-bar-icon icon="cart-o" text="购物车" @click="onFollow" />
 
         <van-action-bar-icon
-            v-if="!productDetail?.favorite"
+            v-if="!isFavoriteRef"
             icon="star-o"
             text="收藏"
-            @click="addFavorite"
+            @click="()=>addFavorite(productDetail!.id)"
         />
         <van-action-bar-icon
             v-else
             icon="star"
             text="已收藏"
             color="#ff5000"
-            @click="removeFavorite"
+            @click="()=>removeFavorite(productDetail!.id)"
         />
         <van-action-bar-button
             type="warning"
@@ -60,13 +78,14 @@
 <script lang="ts" setup>
 import { postOneRecord } from "@/api/cart"
 import { getOneProduct, ProductDetail } from "@/api/product"
-import type { Ref } from "vue"
 import { computed, onMounted, ref } from "vue"
 import { useRoute } from "vue-router"
 import ImageSet from "../../components/ImageSet.vue"
 import { Toast } from "vant"
 import MyNavbar from "@/components/MyNavbar.vue"
 import { avatarTemplate } from "@/utils/image"
+import { follow, isfollowing, unfollow } from "@/api/relation"
+import { setFavorite } from "@/api/favorite"
 const route = useRoute()
 
 const id = computed(() => {
@@ -76,17 +95,24 @@ const id = computed(() => {
     return ""
 })
 
-const productDetail: Ref<ProductDetail | undefined> = ref()
+const productDetail = ref<ProductDetail>()
+const isFollowingRef = ref(false)
+const isFavoriteRef = ref(false)
+onMounted(async () => {
+    let request = await getOneProduct(id.value)
 
-onMounted(() => {
-    getOneProduct(id.value).then((res) => {
-        console.log(
-            "%c [res]:",
-            "color:white;background:blue;font-size:13px",
-            res
-        )
-        productDetail.value = res.data.data
-    })
+    let { data } = request
+    if (data.code === 200) {
+        productDetail.value = data.data
+        if (productDetail.value) {
+            let sellerId = productDetail.value.sellerId
+            let request = await isfollowing(sellerId)
+            let { data } = request
+            if (data.code === 200) {
+                isFollowingRef.value = data.data
+            }
+        }
+    }
 })
 
 function formattedTime(time: string) {
@@ -104,16 +130,48 @@ async function onAddCart() {
     }
 }
 
-function onClickIcon() {
-    return
+async function onFollow(id: number) {
+    let request = await follow(id)
+    let { data } = request
+    if (data.code === 200) {
+        Toast.success("关注成功")
+        isFollowingRef.value = true
+    } else {
+        Toast.fail("关注失败")
+    }
 }
 
-function addFavorite() {
-    return
+async function onUnfollow(id: number) {
+    let request = await unfollow(id)
+    let { data } = request
+    if (data.code === 200) {
+        Toast.success("取消关注成功")
+        isFollowingRef.value = false
+    } else {
+        Toast.fail("取消关注失败")
+    }
 }
 
-function removeFavorite() {
-    return
+async function addFavorite(id: number) {
+    let request = await setFavorite(id)
+    let { data } = request
+    if (data.code === 200) {
+        Toast.success("收藏成功")
+        isFavoriteRef.value = true
+    } else {
+        Toast.fail("收藏失败")
+    }
+}
+
+async function removeFavorite(id: number) {
+    let request = await setFavorite(id)
+    let { data } = request
+    if (data.code === 200) {
+        Toast.success("取消收藏成功")
+        isFavoriteRef.value = false
+    } else {
+        Toast.fail("取消收藏失败")
+    }
 }
 </script>
 

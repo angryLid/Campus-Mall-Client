@@ -20,11 +20,21 @@ const routes: RouteRecordRaw[] = [
         component: WithTabbar,
         name: "app",
         children: [
-            { path: "mall", component: HomeView, name: "mall" },
+            {
+                path: "mall",
+                component: HomeView,
+                name: "mall",
+                meta: {
+                    keepAlive: true,
+                },
+            },
             { path: "post", component: PostView, name: "post" },
             { path: "cart", component: InboxView, name: "cart" },
             { path: "account", component: AccountView, name: "account" },
         ],
+        meta: {
+            keepAlive: true,
+        },
     },
 
     { path: "/sign", component: SignView, name: "sign" },

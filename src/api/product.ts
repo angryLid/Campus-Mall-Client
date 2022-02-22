@@ -19,6 +19,7 @@ export interface Product extends Images {
     modifiedAt: string
 }
 export interface ProductDetail extends Product {
+    sellerId: number
     sellerName: string
     sellerTel: string
     publishTime: string

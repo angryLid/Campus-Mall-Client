@@ -11,15 +11,19 @@
 import { useRouter } from "vue-router"
 
 const props = defineProps<{
-    routeName: string
+    routeName?: string
     title: string
 }>()
 
 const router = useRouter()
 function onClickLeft() {
-    router.replace({
-        name: props.routeName,
-    })
+    if (props.routeName) {
+        router.replace({
+            name: props.routeName,
+        })
+    } else {
+        router.back()
+    }
 }
 </script>
 
