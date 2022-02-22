@@ -29,7 +29,9 @@
 
 <script lang="ts" setup>
 import { signIn } from "@/api/auth"
+import { getMyAccount } from "@/api/user"
 import { useStore } from "@/store"
+import docCookies from "@/utils/cookies"
 import { reactive } from "vue"
 import { useRouter } from "vue-router"
 
@@ -46,8 +48,16 @@ async function onSubmit() {
     const resp = req.data
 
     if (resp.code === 200) {
-        store.$patch({ auth: resp.data })
-        router.replace({ name: "homepage" })
+        const token = resp.data
+        store.$patch({ auth: token })
+        docCookies.setItem("auth", token)
+
+        await getMyAccount().then((res) => {
+            if (res.data.code === 200) {
+                store.$patch({ user: res.data.data })
+                router.replace({ name: "mall" })
+            }
+        })
     }
 }
 </script>

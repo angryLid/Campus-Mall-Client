@@ -2,6 +2,11 @@ import { useAxios } from "@/utils/ajax"
 import { apiVersion } from "./version"
 
 const url = apiVersion + "/account"
+
+// GET /client/account/myaccount
+export function getMyAccount() {
+    return useAxios().get(url + "/myaccount")
+}
 export function getStudentInfo() {
     return useAxios().get("/client/account/student_info/")
 }
