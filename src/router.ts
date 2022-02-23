@@ -1,21 +1,25 @@
-import ChatView from "@/views/cart/ChatView.vue"
 import type { RouteRecordRaw } from "vue-router"
 import { createRouter, createWebHashHistory } from "vue-router"
+import AccountView from "~/account/AccountView.vue"
+// 购物车
+import InboxView from "~/cart/CartView.vue"
+import ChatView from "~/cart/ChatView.vue"
+// 首页
+import HomeView from "~/home/HomeView.vue"
+import ProductDetail from "~/home/ProductDetail.vue"
+// 账户详情页
+import MyFavorite from "@/views/MyInfo/MyFavorite.vue"
+import SignView from "~/MyInfo/SignView.vue"
+import AccountSettings from "~/MySettings/AccountSettings.vue"
+import KycView from "~/MySettings/KycView.vue"
+import MessageList from "~/MyTransactions/MessageList.vue"
+import MyBought from "~/MyTransactions/MyBought.vue"
+import MyPublish from "~/MyTransactions/MyPublish.vue"
+import MySold from "~/MyTransactions/MySold.vue"
+import PostView from "~/post/PostView.vue"
+import WithTabbar from "~/withTabbar.vue"
 import { useStore } from "./store"
-import AccountView from "./views/account/AccountView.vue"
-import MyFavorite from "./views/account/AccountView/MyFriends/MyFavorite.vue"
-import SignView from "./views/account/AccountView/MyInfo/SignView.vue"
-import AccountSettings from "./views/account/AccountView/MySettings/AccountSettings.vue"
-import KycView from "./views/account/AccountView/MySettings/KycView.vue"
-import MessageList from "./views/account/AccountView/MyTransactions/MessageList.vue"
-import MyBought from "./views/account/AccountView/MyTransactions/MyBought.vue"
-import MyPublish from "./views/account/AccountView/MyTransactions/MyPublish.vue"
-import MySold from "./views/account/AccountView/MyTransactions/MySold.vue"
-import InboxView from "./views/cart/CartView.vue"
-import HomeView from "./views/home/HomeView.vue"
-import ProductDetail from "./views/home/ProductDetail.vue"
-import PostView from "./views/post/PostView.vue"
-import WithTabbar from "./views/withTabbar.vue"
+
 const routes: RouteRecordRaw[] = [
     {
         path: "/",

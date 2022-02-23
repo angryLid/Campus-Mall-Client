@@ -19,6 +19,9 @@
             "@/*": [
                 "src/*"
             ],
+            "~/*": [
+                "src/views/*"
+            ],
             "local/*": [
                 "../path/to/local/modules/*"
             ]
