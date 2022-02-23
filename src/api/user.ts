@@ -22,3 +22,7 @@ export function getNameByTel(telephone: string) {
 export function getUserRole() {
     return useAxios().get(url + "/myaccount/roletype")
 }
+
+export function setName(name: string) {
+    return useAxios().post(url + "/name", { name })
+}

@@ -7,8 +7,8 @@ export const useStore = defineStore("main", {
     state: () => ({
         auth: auth ? auth : "",
         user: {
-            name: "游客, 您好",
-            telephone: "点击此处登录",
+            name: "",
+            telephone: "",
             followed: 0,
             following: 0,
         },

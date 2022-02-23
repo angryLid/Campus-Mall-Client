@@ -3,18 +3,24 @@
     <van-form @submit="onSubmit">
         <van-cell-group inset>
             <van-field
-                v-model="user.oldName"
+                v-model="store.user.name"
                 name="当前用户名"
                 label="当前用户名"
                 placeholder="用户名"
                 disabled
             />
             <van-field
-                v-model="user.newName"
-                name="密码"
+                v-model="name"
+                name="新的用户名"
                 label="新的用户名"
-                placeholder="用户名"
-                :rules="[{ required: true, message: '请填写密码' }]"
+                :placeholder="message"
+                :rules="[
+                    {
+                        required: true,
+                        pattern: /^[a-zA-Z0-9_\u4e00-\u9fa5]{2,20}$/,
+                        message,
+                    },
+                ]"
             />
         </van-cell-group>
         <div style="margin: 16px">
@@ -37,14 +43,16 @@
 import { useStore } from "@/store"
 import { useRouter } from "vue-router"
 import MyNavbar from "@/components/MyNavbar.vue"
-import { reactive } from "vue"
+import { ref } from "vue"
+
+import { setName } from "@/api/user"
+import { Toast } from "vant"
 const router = useRouter()
 const store = useStore()
 
-const user = reactive({
-    oldName: "",
-    newName: "",
-})
+const message = "长度2-20位,字母,数字,下划线和汉字"
+const name = ref("")
+
 function onClick() {
     store.$patch({ auth: "" })
     store.$patch({
@@ -58,8 +66,15 @@ function onClick() {
     router.replace({ name: "account" })
 }
 
-function onSubmit() {
-    return
+async function onSubmit() {
+    const request = await setName(name.value)
+    const response = request.data
+    if (response.code === 200) {
+        store.user.name = name.value
+        Toast("修改成功")
+    } else {
+        Toast("用户名已经被占用了\n请换一个吧")
+    }
 }
 </script>
 
