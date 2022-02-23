@@ -95,7 +95,6 @@ import {
     CartItem,
     postOneRecord,
     putOneRecord,
-    doPayment,
     removeRecord,
 } from "@/api/cart"
 
@@ -104,7 +103,7 @@ import { useStore } from "@/store"
 import { Toast } from "vant"
 import { useRouter } from "vue-router"
 import { getSeller } from "@/api/product"
-import { getUserRole } from "@/api/user"
+import { pay, UploadOrder } from "@/api/order"
 
 const store = useStore()
 const router = useRouter()
@@ -134,14 +133,14 @@ async function getMyCart() {
 }
 
 async function onPay() {
-    const preTrans: number[] = []
+    const payload: UploadOrder[] = []
     cartItems.value.forEach((item) => {
         if (item.checked) {
-            preTrans.push(item.cartId)
+            payload.push({ id: item.cartId, quantity: item.productSum })
         }
     })
 
-    const req = await doPayment(preTrans)
+    const req = await pay(payload)
     const resp = req.data
 
     if (resp.code === 200) {

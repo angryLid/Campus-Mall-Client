@@ -5,11 +5,11 @@
             <van-icon name="bag" color="#ba391a" size="32"></van-icon>
             <span class="grid-item-text">我发布的</span>
         </van-grid-item>
-        <van-grid-item>
+        <van-grid-item @click="() => push('sold')">
             <van-icon name="gold-coin" color="#197dbb" size="32"></van-icon>
             <span class="grid-item-text">我卖出的</span>
         </van-grid-item>
-        <van-grid-item>
+        <van-grid-item @click="() => push('bought')">
             <van-icon name="column" color="#ba830c" size="32"></van-icon>
             <span class="grid-item-text">我买到的</span>
         </van-grid-item>

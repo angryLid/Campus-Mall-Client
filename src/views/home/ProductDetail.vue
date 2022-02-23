@@ -153,6 +153,7 @@ async function onUnfollow(id: number) {
 }
 
 async function addFavorite(id: number) {
+    console.log("%c [id]:", "color:white;background:blue;font-size:13px", id)
     let request = await setFavorite(id)
     let { data } = request
     if (data.code === 200) {

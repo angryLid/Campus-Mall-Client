@@ -13,6 +13,7 @@ export const useStore = defineStore("main", {
             following: 0,
         },
         imageHostURL: "http://119.91.147.80:9000/mall/",
+        favorite: 0,
     }),
     actions: {
         setAuth(val: string) {

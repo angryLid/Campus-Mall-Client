@@ -28,6 +28,7 @@ export function getAllRecords() {
 }
 
 // 清空购物车
+// POST /{version}/cart/pay/
 export function doPayment(items: number[]) {
     return useAxios().post(url + "/pay/", {
         items,

@@ -8,7 +8,9 @@ import SignView from "./views/account/AccountView/MyInfo/SignView.vue"
 import AccountSettings from "./views/account/AccountView/MySettings/AccountSettings.vue"
 import KycView from "./views/account/AccountView/MySettings/KycView.vue"
 import MessageList from "./views/account/AccountView/MyTransactions/MessageList.vue"
+import MyBought from "./views/account/AccountView/MyTransactions/MyBought.vue"
 import MyPublish from "./views/account/AccountView/MyTransactions/MyPublish.vue"
+import MySold from "./views/account/AccountView/MyTransactions/MySold.vue"
 import InboxView from "./views/cart/CartView.vue"
 import HomeView from "./views/home/HomeView.vue"
 import ProductDetail from "./views/home/ProductDetail.vue"
@@ -45,6 +47,8 @@ const routes: RouteRecordRaw[] = [
     { path: "/chat", component: MessageList, name: "msgbox" },
     { path: "/publish", component: MyPublish, name: "pub" },
     { path: "/favorite", component: MyFavorite, name: "favorite" },
+    { path: "/sold", component: MySold, name: "sold" },
+    { path: "/bought", component: MyBought, name: "bought" },
 ]
 
 const router = createRouter({
