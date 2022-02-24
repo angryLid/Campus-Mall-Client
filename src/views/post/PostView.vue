@@ -88,7 +88,8 @@
 
 <script lang="ts" setup>
 import { postOneProduct } from "@/api/product"
-import { getUserRole } from "@/api/user"
+import { getMerchantInfo } from "@/api/qualification"
+import { getStudentInfo } from "@/api/user"
 import { Toast, UploaderFileListItem } from "vant"
 import { onMounted } from "vue"
 import { ref } from "vue"
@@ -107,6 +108,10 @@ const typeMapping = new Map()
 
 onMounted(async () => {
     await initUserRole()
+    if (columns.value.length === 0) {
+        columns.value.push("请先进行认证")
+        result.value = "请先进行认证"
+    }
 })
 
 function onConfirm(value: string) {
@@ -186,7 +191,7 @@ async function onSubmit() {
 }
 
 async function initUserRole() {
-    const req = await getUserRole()
+    const req = await getMerchantInfo()
     const resp = req.data
     console.log(
         "%c [resp]:",
@@ -194,26 +199,30 @@ async function initUserRole() {
         resp
     )
     if (resp.code === 200) {
-        const student = resp.data.student
-        const qualification = resp.data.qualification
-
-        if (student || qualification) {
+        const enterpriseName = resp.data.enterpriseName
+        const currentStatus = resp.data.currentStatus
+        if (currentStatus === "approved") {
+            result.value = enterpriseName
+            columns.value.push(enterpriseName)
+            typeMapping.set(enterpriseName, "enterprise")
             btnDisabled.value = false
-        } else {
-            result.value = "请先进行认证"
-            columns.value.push("请先进行认证")
-            return
         }
-        if (student) {
-            result.value = `个人闲置(${student.name})`
-            columns.value.push(`个人闲置(${student.name})`)
-            typeMapping.set(`个人闲置(${student.name})`, "personal")
-        }
-        if (qualification) {
-            result.value = qualification.enterpriseName
-            columns.value.push(qualification.enterpriseName)
-            typeMapping.set(qualification.enterpriseName, "enterprise")
-        }
+    }
+
+    const req2 = await getStudentInfo()
+
+    const resp2 = req2.data
+    console.log(
+        "%c [resp2]:",
+        "color:white;background:blue;font-size:13px",
+        resp2
+    )
+    if (resp2.code === 200 && resp2.data != null) {
+        const student = resp2.data.name
+        result.value = `个人闲置(${student})`
+        columns.value.push(`个人闲置(${student})`)
+        typeMapping.set(`个人闲置(${student})`, "personal")
+        btnDisabled.value = false
     }
 }
 </script>
