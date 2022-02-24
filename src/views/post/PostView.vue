@@ -90,18 +90,18 @@
 import { postOneProduct } from "@/api/product"
 import { getUserRole } from "@/api/user"
 import { Toast, UploaderFileListItem } from "vant"
-import { onMounted, Ref } from "vue"
+import { onMounted } from "vue"
 import { ref } from "vue"
 
-const title = ref("红米K40 12+256")
-const description = ref("9新箱说全,未拆修")
-const images: Ref<UploaderFileListItem[]> = ref([])
-const price: Ref<string> = ref("999.99")
+const title = ref("")
+const description = ref("")
+const images = ref<UploaderFileListItem[]>([])
+const price = ref<string>("")
 const show = ref(false)
 const btnDisabled = ref(true)
 const result = ref("")
 const showPicker = ref(false)
-const columns: Ref<string[]> = ref([])
+const columns = ref<string[]>([])
 
 const typeMapping = new Map()
 
@@ -113,6 +113,7 @@ function onConfirm(value: string) {
     result.value = value
     showPicker.value = false
 }
+
 function onInput(inputStr: string | number) {
     const isDot = inputStr === "."
     if (price.value.length === 0 && isDot) {
@@ -157,6 +158,7 @@ function onDelete() {
 function onPriceFocusIn() {
     show.value = true
 }
+
 async function onSubmit() {
     const formData = new FormData()
 
@@ -186,6 +188,11 @@ async function onSubmit() {
 async function initUserRole() {
     const req = await getUserRole()
     const resp = req.data
+    console.log(
+        "%c [resp]:",
+        "color:white;background:blue;font-size:13px",
+        resp
+    )
     if (resp.code === 200) {
         const student = resp.data.student
         const qualification = resp.data.qualification
@@ -193,6 +200,8 @@ async function initUserRole() {
         if (student || qualification) {
             btnDisabled.value = false
         } else {
+            result.value = "请先进行认证"
+            columns.value.push("请先进行认证")
             return
         }
         if (student) {
