@@ -193,12 +193,8 @@ async function onSubmit() {
 async function initUserRole() {
     const req = await getMerchantInfo()
     const resp = req.data
-    console.log(
-        "%c [resp]:",
-        "color:white;background:blue;font-size:13px",
-        resp
-    )
-    if (resp.code === 200) {
+
+    if (resp.code === 200 && resp.data) {
         const enterpriseName = resp.data.enterpriseName
         const currentStatus = resp.data.currentStatus
         if (currentStatus === "approved") {
@@ -212,11 +208,6 @@ async function initUserRole() {
     const req2 = await getStudentInfo()
 
     const resp2 = req2.data
-    console.log(
-        "%c [resp2]:",
-        "color:white;background:blue;font-size:13px",
-        resp2
-    )
     if (resp2.code === 200 && resp2.data != null) {
         const student = resp2.data.name
         result.value = `个人闲置(${student})`

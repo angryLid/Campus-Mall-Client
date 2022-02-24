@@ -26,7 +26,7 @@ export interface ProductDetail extends Product {
     favorite: boolean
 }
 export function postOneProduct(formData: FormData) {
-    return useAxios().post(url, formData, {
+    return useAxios().post(url + "/", formData, {
         headers: {
             "Content-Type": "multipart/form-data",
         },

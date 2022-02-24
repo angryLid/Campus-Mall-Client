@@ -51,8 +51,7 @@
     </div>
 
     <van-action-bar>
-        <van-action-bar-icon icon="chat-o" text="客服" @click="onFollow" />
-        <van-action-bar-icon icon="cart-o" text="购物车" @click="onFollow" />
+        <van-action-bar-icon icon="chat-o" text="客服" @click="talk" />
 
         <van-action-bar-icon
             v-if="!isFavoriteRef"
@@ -86,6 +85,7 @@ import MyNavbar from "@/components/MyNavbar.vue"
 import { avatarTemplate } from "@/utils/image"
 import { follow, isfollowing, unfollow } from "@/api/relation"
 import { setFavorite } from "@/api/favorite"
+import router from "@/router"
 const route = useRoute()
 
 const id = computed(() => {
@@ -153,7 +153,6 @@ async function onUnfollow(id: number) {
 }
 
 async function addFavorite(id: number) {
-    console.log("%c [id]:", "color:white;background:blue;font-size:13px", id)
     let request = await setFavorite(id)
     let { data } = request
     if (data.code === 200) {
@@ -173,6 +172,16 @@ async function removeFavorite(id: number) {
     } else {
         Toast.fail("取消收藏失败")
     }
+}
+
+function talk() {
+    router.push({
+        name: "chat",
+        params: {
+            id: productDetail.value?.sellerTel,
+        },
+    })
+    return
 }
 </script>
 
