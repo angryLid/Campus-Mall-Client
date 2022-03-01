@@ -20,7 +20,7 @@ const router = useRouter()
 const store = useStore()
 
 function toSubView(name: string) {
-    if (store.auth) {
+    if (store.token) {
         router.push({ name: name })
     } else {
         Toast.fail("请先登录")

@@ -29,14 +29,13 @@
 
 <script lang="ts" setup>
 import { signIn } from "@/api/auth"
-import { getMyAccount } from "@/api/user"
-import { useStore } from "@/store"
 import docCookies from "@/utils/cookies"
+import { updateAccount } from "@/utils/updateAccount"
+import { Toast } from "vant"
 import { reactive } from "vue"
 import { useRouter } from "vue-router"
 
 const router = useRouter()
-const store = useStore()
 const user = reactive({
     telephone: "",
     password: "",
@@ -48,16 +47,14 @@ async function onSubmit() {
     const resp = req.data
 
     if (resp.code === 200) {
-        const token = resp.data
-        store.$patch({ auth: token })
-        docCookies.setItem("auth", token)
-
-        await getMyAccount().then((res) => {
-            if (res.data.code === 200) {
-                store.$patch({ user: res.data.data })
-                router.replace({ name: "mall" })
-            }
-        })
+        docCookies.setItem("auth", resp.data)
+        Toast.success("登录成功")
+        await updateAccount()
+        setTimeout(() => {
+            router.replace({ name: "account" })
+        }, 1000)
+    } else {
+        Toast.fail("登录失败\n请检查用户名或密码")
     }
 }
 </script>

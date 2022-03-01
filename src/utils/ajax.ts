@@ -8,7 +8,7 @@ export function useAxios() {
         // baseURL: "http://192.168.56.225:8080/",
         baseURL: "http://localhost:8080/",
         headers: {
-            auth: store.auth,
+            auth: store.token,
         },
     })
 }

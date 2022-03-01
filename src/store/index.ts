@@ -1,11 +1,9 @@
 import docCookies from "@/utils/cookies"
 import { defineStore } from "pinia"
 
-const auth = docCookies.getItem("auth")
-
 export const useStore = defineStore("main", {
     state: () => ({
-        auth: auth ? auth : "",
+        auth: "",
         user: {
             name: "",
             telephone: "",
@@ -15,9 +13,14 @@ export const useStore = defineStore("main", {
         imageHostURL: "http://119.91.147.80:9000/mall/",
         favorite: 0,
     }),
-    actions: {
-        setAuth(val: string) {
-            this.auth = val
+    getters: {
+        token: () => {
+            const t = docCookies.getItem("auth")
+            if (t !== null && t !== "" && t.trim() !== "") {
+                return t
+            } else {
+                return ""
+            }
         },
     },
 })

@@ -2,7 +2,7 @@
     <div class="avatar-group" @click="handleSign">
         <div class="avatar-group-image">
             <van-image
-                :src="avatarTemplate(user.name.slice(0, 1))"
+                :src="avatarTemplate(store.user.name.slice(0, 1))"
                 height="60"
                 width="60"
                 round
@@ -13,29 +13,24 @@
         </div>
 
         <div class="avatar-group-info">
-            <div class="avatar-group-info-username">{{ user.name }}</div>
-            <div class="avatar-group-info-userid">{{ user.id }}</div>
+            <div class="avatar-group-info-username">{{ store.user.name }}</div>
+            <div class="avatar-group-info-userid">
+                {{ store.user.telephone }}
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
 import { useStore } from "@/store"
-import { computed } from "vue"
 import { useRouter } from "vue-router"
 import { avatarTemplate } from "@/utils/image"
 
 const router = useRouter()
 const store = useStore()
 
-const user = computed(() => {
-    return {
-        name: store.user.name,
-        id: store.user.telephone,
-    }
-})
 function handleSign() {
-    if (!store.auth) {
+    if (store.token === "") {
         router.push({ name: "sign" })
     }
 }
