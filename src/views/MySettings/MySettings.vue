@@ -12,15 +12,15 @@
 </template>
 
 <script lang="ts" setup>
-import { useStore } from "@/store"
+import docCookies from "@/utils/cookies"
 import { Toast } from "vant"
 import { useRouter } from "vue-router"
 
 const router = useRouter()
-const store = useStore()
+const auth = docCookies.getItem("auth")
 
 function toSubView(name: string) {
-    if (store.token) {
+    if (auth) {
         router.push({ name: name })
     } else {
         Toast.fail("请先登录")

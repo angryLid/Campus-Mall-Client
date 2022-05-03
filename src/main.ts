@@ -30,6 +30,7 @@ import {
     Tabbar,
     TabbarItem,
     Tabs,
+    Tag,
     Toast,
     Uploader,
 } from "vant"
@@ -76,5 +77,5 @@ app.use(Picker)
 app.use(Popup)
 app.use(Uploader)
 app.use(NumberKeyboard)
-
+app.use(Tag)
 app.mount("#app")
