@@ -40,13 +40,14 @@
 </template>
 
 <script lang="ts" setup>
-import { useStore } from "@/store"
-import { useRouter } from "vue-router"
-import MyNavbar from "@/components/MyNavbar.vue"
-import { ref } from "vue"
-
 import { setName } from "@/api/user"
+import MyNavbar from "@/components/MyNavbar.vue"
+import { useStore } from "@/store"
+import docCookies from "@/utils/cookies"
 import { Toast } from "vant"
+import { ref } from "vue"
+import { useRouter } from "vue-router"
+
 const router = useRouter()
 const store = useStore()
 
@@ -57,12 +58,11 @@ function onClick() {
     store.$patch({ auth: "" })
     store.$patch({
         user: {
-            name: "游客, 您好",
-            telephone: "点击此处登录",
-            followed: 0,
-            following: 0,
+            name: undefined,
+            telephone: undefined,
         },
     })
+    docCookies.removeItem("auth", null, null)
     router.replace({ name: "account" })
 }
 

@@ -1,3 +1,4 @@
+// 账户详情页
 import type { RouteRecordRaw } from "vue-router"
 import { createRouter, createWebHashHistory } from "vue-router"
 import AccountView from "~/account/AccountView.vue"
@@ -7,8 +8,7 @@ import ChatView from "~/cart/ChatView.vue"
 // 首页
 import HomeView from "~/home/HomeView.vue"
 import ProductDetail from "~/home/ProductDetail.vue"
-// 账户详情页
-import MyFavorite from "@/views/MyInfo/MyFavorite.vue"
+import MyFavorite from "~/MyInfo/MyFavorite.vue"
 import SignView from "~/MyInfo/SignView.vue"
 import AccountSettings from "~/MySettings/AccountSettings.vue"
 import KycView from "~/MySettings/KycView.vue"
@@ -66,10 +66,13 @@ router.beforeEach((to, from) => {
     }
 
     const store = useStore()
-    if (to.name?.toString().startsWith("tr")) {
-        if (store.user.telephone.length < 1) {
-            return false
-        }
+    const toName = to.name?.toString()
+
+    if (toName === "sign" && store.user.telephone) {
+        return false
+    }
+    if (toName === "tr_kyc" && !store.user.telephone) {
+        return false
     }
 })
 export default router

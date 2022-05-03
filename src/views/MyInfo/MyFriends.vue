@@ -9,20 +9,20 @@
             <span>历史浏览</span>
         </van-grid-item>
         <van-grid-item>
-            <span>{{ user.following }}</span>
+            <span>{{ store.following }}</span>
             <span>关注</span>
         </van-grid-item>
         <van-grid-item>
-            <span>{{ user.followed }}</span>
+            <span>{{ store.followed }}</span>
             <span>粉丝</span>
         </van-grid-item>
     </van-grid>
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from "vue-router"
 import { useStore } from "@/store"
 import docCookies from "@/utils/cookies"
+import { useRouter } from "vue-router"
 
 const router = useRouter()
 const store = useStore()

@@ -1,5 +1,6 @@
 import { useStore } from "@/store"
 import axios from "axios"
+import docCookies from "./cookies"
 
 export function useAxios() {
     const store = useStore()
@@ -8,7 +9,7 @@ export function useAxios() {
         // baseURL: "http://192.168.56.225:8080/",
         baseURL: "http://localhost:8080/",
         headers: {
-            auth: store.token,
+            auth: docCookies.getItem("auth") || "",
         },
     })
 }
