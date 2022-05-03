@@ -1,6 +1,5 @@
 // 账户详情页
-import type { RouteRecordRaw } from "vue-router"
-import { createRouter, createWebHashHistory } from "vue-router"
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
 import AccountView from "~/account/AccountView.vue"
 // 购物车
 import InboxView from "~/cart/CartView.vue"
@@ -56,7 +55,8 @@ const routes: RouteRecordRaw[] = [
 ]
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    // history: createWebHashHistory(),
+    history: createWebHistory(),
     routes,
 })
 
