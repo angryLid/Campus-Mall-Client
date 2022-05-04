@@ -69,6 +69,7 @@ router.beforeEach((to, from) => {
     const toName = to.name?.toString()
 
     if (toName === "sign" && store.user.telephone) {
+        console.log(toName, store.user.telephone)
         return false
     }
     if (toName === "tr_kyc" && !store.user.telephone) {
